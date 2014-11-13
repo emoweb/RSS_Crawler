@@ -42,7 +42,7 @@ class RSSPipe
   
   # フィードを取得し, @dl_items に結合. set_channel = T なら channelも移す.
   def get_feed url, set_channel = true
-    info{"access: #{url}"}
+    info{"access: #{url} "}
     r = RSS::Parser.parse(url)
     @dl_items.concat(r.items)
     if set_channel then
@@ -85,7 +85,7 @@ class RSSPipe
         @deleted
       end.push(i)
     }
-    @l.info(@name){
+    info{
       "classification completed. update:#{@updated.size}" +
         " non-updated:#{@saved.size} deleted:#{@deleted.size}"
     }
