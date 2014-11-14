@@ -66,19 +66,24 @@ module HTTPUtil
   module_function :request
   
   
-  #       get(url, referer, header) -> Net::HTTPResponse
+  #       get(url, referer, header, redirect_max) -> Net::HTTPResponse
   # 
   # HTTPでGetする. 圧縮/解凍は勝手に処理してくれる.
   # refererがnilなら無し.
   # headerはnilなら標準.
-  def get url, referer = nil, header = DEFAULT_HAEDER_GET.dup
-    header = DEFAULT_HAEDER_GET.dup unless header
+  # status codeがredirectかつLocationが存在する場合,
+  # redirect_max > 0の間,自動的にリダイレクト先に飛ぶ
+  def get url, referer = nil, header = nil, redirect_max = 5
+    header ||= DEFAULT_HAEDER_GET.dup
     #p [url,referer,header]
     header["Referer"] = referer.to_s if referer
-    request(url, :get, header)
+    r = request(url, :get, header)
+    if redirect_max > 0 and r.status / 100 == 3 and r["Location"]
+      r = get(r["Location"], url, header, redirect_max - 1)
+    end
+    return r
   end
   module_function :get
-  
   
   #       post(url, data) -> Net::HTTPResponse
   # 
