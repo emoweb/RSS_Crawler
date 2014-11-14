@@ -9,7 +9,7 @@ require libpath + 'crawl_logger'
 require 'rss'
 require 'set'
 require 'kconv'
-
+require 'nokogiri'
 
 # RSSを取得し,加工・ファイル出力する.
 # 1出力feed につき 1 instance
@@ -17,11 +17,8 @@ require 'kconv'
 # 確認はpubdateで行う.
 # 
 # 一般的には
-# initialize -> get_feed x1 or n times ->
-# {filtering} -> read_saved -> {get full page}
-# -> save
-# の順で処理を行う.
-# {}の中は任意.
+# initialize -> get_feed(s) -> {filtering} -> read_saved -> {fetch_page} -> save
+# の順で処理を行う. {}の中は任意.
 class RSSPipe
   # savedir: フィードファイル保存先.
   # logger: log用のinstance. 他のRSSPipe instanceと共有してもOK.
@@ -61,7 +58,7 @@ class RSSPipe
     # ファイル読み込み
     prev = if @savefile.file?
       @l.info(@name){ 'cache loading'}
-      RSS::Parser.parse(@savefile)
+      RSS::Parser.parse(@savefile).items
     else
       @l.info(@name){ 'The preview of results is empty'}
       []
@@ -119,6 +116,26 @@ class RSSPipe
     @dl_items.delete_if{ |i| block.call(i) }
     info{"filterd: #{befs} -> #{@dl_items.size}"}
   end
+  
+  # fetch_page(xpath = nil, wait = 3) -> int
+  # 
+  # @updated を全文取得してdescriptionを書き換え,要素数を返す.
+  # xpathを指定した場合,xpathでの抜き出しも行う.
+  # waitは次のページへアクセスするまでのsleep秒数.
+  def fetch_page xpath = nil, wait = 3
+    @updated.each_with_index { |item, idx|
+      info{ "fetch page #{idx +1}/#{@updated.size} : #{item.link}" }
+      r = HTTPUtil.get(item.link)
+      
+      info{ "status : #{r.status}"}
+      next if(r.status / 100 != 2)
+      
+      item.description = xpath ? Nokogiri::HTML(r.body).xpath(xpath) : r.body
+      
+      sleep(wait) if(wait > 0)
+    }
+  end
+  
 end
 
 
