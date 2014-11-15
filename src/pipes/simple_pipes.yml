@@ -1,0 +1,19 @@
+---
+
+# [[name,url,filter_regex,xpath]]
+# emptyでnil
+:procedure_1:
+- [
+    'excite_koneta',
+    'http://rss.rssad.jp/rss/excite/source/Excite',
+    '^PR:\s',
+    '//div[@class="story"]'
+]
+- [
+    'excite_odd',
+    'http://rss.rssad.jp/rss/excite/odd',
+    '',
+    '//div[@class="story"]'
+]
+
+
