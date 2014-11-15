@@ -9,6 +9,7 @@
 :exe_pipes:
 - :excite_koneta
 - :excite_odd
+- :wired
 
 # timeout [s]
 :timeout: 3000
