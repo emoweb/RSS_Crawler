@@ -1,0 +1,15 @@
+---
+
+:save_directory: 'z:/'
+#:save_directory: 'D:/download/Dropbox/Public/feeds/'
+
+:log_directory: 'd:/var/rssc/log/'
+
+# 実行するpipe名
+:exe_pipes:
+- :excite_koneta
+- :excite_odd
+
+# timeout [s]
+:timeout: 3000
+

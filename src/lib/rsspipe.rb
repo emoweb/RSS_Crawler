@@ -14,7 +14,6 @@ require 'nokogiri'
 # name(symbol) => RSSPipe Proc の形式でPipeを登録していく.
 # Procは情報を元に生成されたRSSPipeのinstanceを受け取り,
 # get_feed(s)からsaveまでの処理をする.
-
 RSS_PIPES = {}
 
 # RSSを取得し,加工・ファイル出力する.
@@ -31,7 +30,7 @@ class RSSPipe
   # name: フィード名. ファイル名やlogに使われる.
   def initialize savedir, logger, name
     @name = name
-    @savefile = savedir + (@name + ".xml")
+    @savefile = savedir + "#{@name}.xml"
     @l = logger
     @dl_items = []
     @updated = [] # 更新されたRSSアイテム

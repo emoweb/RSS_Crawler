@@ -4,13 +4,13 @@
 require 'yaml'
 conf = YAML.load_file(__FILE__.sub(/\.rb$/, '.yml'))
 
-PIPES ||= {} if $0 == __FILE__
+RSS_PIPES ||= {} if $0 == __FILE__
 
 # pipe_procedure_1 だけで完結する場合
 # [[name,url,filter_regex,xpath]] を読み込み定義
 conf[:procedure_1].each{ |name, url, fr, xp|
   args = [url, (fr.empty? ? nil : Regexp.new(fr)), (xp.empty? ? nil : xp)]
-  PIPES[name.to_sym] = Proc.new{|pipe| pipe.procedure_1(*args) }
+  RSS_PIPES[name.to_sym] = Proc.new{|pipe| pipe.procedure_1(*args) }
 }
 
 
