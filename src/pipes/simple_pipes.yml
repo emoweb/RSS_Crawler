@@ -18,4 +18,10 @@
   - 'http://wired.jp/feed/'
   - ''
   - '//div[@class="article_maincontents"]'
+-
+  - 'cyclist'
+  - 'http://cyclist.sanspo.com/feed'
+  - ''
+  - '//div[@class="description clearfix"]'
+
 
