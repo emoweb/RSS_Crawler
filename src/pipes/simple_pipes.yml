@@ -5,13 +5,15 @@
 :procedure_1:
 - [
     'excite_koneta',
-    'http://rss.rssad.jp/rss/excite/source/Excite',
+    'http://www.excite.co.jp/News/rss/source/?source=Excite'
+#    'http://rss.rssad.jp/rss/excite/source/Excite',
     '^PR:\s',
     '//div[@class="story"]'
 ]
 - [
     'excite_odd',
-    'http://rss.rssad.jp/rss/excite/odd',
+#    'http://rss.rssad.jp/rss/excite/odd',
+    'http://www.excite.co.jp/News/rss/odd/',
     '',
     '//div[@class="story"]'
 ]
