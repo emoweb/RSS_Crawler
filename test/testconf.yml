@@ -1,0 +1,12 @@
+---
+
+:save_directory: 'z:/'
+:log_directory: 'z:/'
+
+# 実行するpipe名
+:exe_pipes:
+- :wired
+
+# timeout [s]
+:timeout: 3000
+

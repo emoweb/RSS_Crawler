@@ -48,9 +48,15 @@ class RSSPipe
     r = RSS::Parser.parse(url)
     @dl_items.concat(r.items)
     if set_channel then
-      [:title, :description, :link, :about].each{|sym|
-        @channel[sym] = r.channel.__send__(sym)
+      # 共通項目をコピー
+      ch = r.channel
+      [:title, :description, :link].each{|sym|
+        @channel[sym] = ch.__send__(sym)
       }
+      # RSS1.0等の場合はaboutが定義されていないため,linkで代用
+      rss1 = ch.methods.grep(/about/).empty?
+      @channel[:about] = rss1 ? ch.link : ch.about
+      
       info{"set channel: #{@channel[:title]}"}
     end
   end

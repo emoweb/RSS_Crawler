@@ -4,7 +4,6 @@ require 'pathname'
 srcdir = Pathname(__FILE__).dirname
 require srcdir + 'lib/rsspipe'
 require 'time'
-
 # pipes読み込み
 (pdir = srcdir + 'pipes').opendir.each{|f|
   require pdir + f if f =~ /\.rb$/
