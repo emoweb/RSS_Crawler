@@ -3,6 +3,7 @@
 require 'pathname'
 srcdir = Pathname(__FILE__).dirname
 require srcdir + 'lib/rsspipe'
+require srcdir + 'lib/index_maker'
 require 'time'
 # pipes読み込み
 (pdir = srcdir + 'pipes').opendir.each{|f|
@@ -45,19 +46,28 @@ class RSSCrawler
     @cwth = @conf[:exe_pipes].collect{ |name|
       Thread.new(name){ |_name| crawl_rss(_name) }
     }
+    
+    # make & save index.html
+    @logger.info{"make & save index.html"}
+    s = make_index(@conf[:exe_pipes])
+    IO.write((@savedir + 'index.html'), s)
+    
     # kill timer
     @killtimer = Thread.new{
       sleep t = @conf[:timeout]
       @logger.warn{ "timeout (#{t}s)" }
       @cwth.each{|th| th.kill }
     }
-    @cwth.each{|th| th.join }
     
+    # wait for crawl
+    @cwth.each{|th| th.join }
     @logger.info{ "complete" }
     
   rescue => e
     @logger.error_exception("crawl_all", e)
   end
+  
+  
   
 end
 
