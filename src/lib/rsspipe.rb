@@ -11,6 +11,12 @@ require 'set'
 require 'kconv'
 require 'nokogiri'
 
+# name(symbol) => RSSPipe Proc の形式でPipeを登録していく.
+# Procは情報を元に生成されたRSSPipeのinstanceを受け取り,
+# get_feed(s)からsaveまでの処理をする.
+
+RSS_PIPES = {}
+
 # RSSを取得し,加工・ファイル出力する.
 # 1出力feed につき 1 instance
 # 前回の出力が残っている場合,更新部分のみ加工する.
@@ -127,15 +133,24 @@ class RSSPipe
       info{ "fetch page #{idx +1}/#{@updated.size} : #{item.link}" }
       r = HTTPUtil.get(item.link)
       
-      info{ "status : #{r.status}"}
+      info{ "status : #{r.status}" }
       next if(r.status / 100 != 2)
       
       item.description = xpath ? Nokogiri::HTML(r.body).xpath(xpath) : r.body
       
-      sleep(wait) if(wait > 0)
+      (wait > 0) && sleep(wait)
     }
   end
   
+  # get_feed, filtering, read_saved, fetch_page, save_rss の一連の流れを行う.
+  # filterはtitleをregexで確認する. xpath, filter_regexがnilの場合はskipする.
+  def procedure_1 feed_url, filter_regex, xpath
+    get_feed(feed_url)
+    filter_regex && filtering{|item| item.title =~ filter_regex }
+    read_saved
+    xpath && fetch_page(xpath)
+    save_rss
+  end
+  
+  
 end
-
-
