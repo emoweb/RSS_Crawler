@@ -16,3 +16,7 @@
 # timeout [s]
 :timeout: 3000
 
+# fetch page wait
+:fp_wait: 5
+
+

@@ -5,8 +5,11 @@
 
 # 実行するpipe名
 :exe_pipes:
-- :scienceplus2ch
+- :nikkan
 
 # timeout [s]
 :timeout: 3000
+
+# fetch page wait
+:fp_wait: 3
 

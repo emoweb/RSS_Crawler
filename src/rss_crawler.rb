@@ -31,7 +31,7 @@ class RSSCrawler
   def crawl_rss name
     proc = RSS_PIPES[name]
     if proc
-      proc.call( RSSPipe.new(@savedir, @logger, name) )
+      proc.call( RSSPipe.new(@savedir, @logger, name, @conf[:fp_wait]) )
     else
       @logger.error{ "#{name} is empty" }
     end

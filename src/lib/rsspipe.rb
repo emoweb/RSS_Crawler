@@ -28,7 +28,8 @@ class RSSPipe
   # savedir: フィードファイル保存先.
   # logger: log用のinstance. 他のRSSPipe instanceと共有してもOK.
   # name: フィード名. ファイル名やlogに使われる.
-  def initialize savedir, logger, name
+  # wait: fetch pageでのsleep時間. classで共通
+  def initialize savedir, logger, name, wait = -1
     @name = name
     @savefile = savedir + "#{@name}.xml"
     @l = logger
@@ -37,8 +38,10 @@ class RSSPipe
     @saved = []   # 以前からあったアイテム
     @deleted = [] # 保存されていたが取得したフィードに無いアイテム
     @channel = {} # チャンネル情報. :title, :description, :link, :about を保有.
+    @wait = wait  # fetch_pageの間隔
   end
-  attr_reader :updated, :channel
+  attr_reader :updated, :channel  
+  attr_accessor :wait
   
   def info &bk; @l.info(@name, &bk); end
   
@@ -118,7 +121,6 @@ class RSSPipe
     
     IO.write(@savefile, r)
     @l.info(@name){ 'complete' }
-    
   end
   
   # @dl_items をフィルタリングする. blockが true を返したitemを全て落とす.
@@ -128,34 +130,35 @@ class RSSPipe
     info{"filterd: #{befs} -> #{@dl_items.size}"}
   end
   
-  # fetch_page(xpath = nil, wait = 3) -> int
+  # fetch_page(xpath = nil, wait = 3, &block) -> int
   # 
   # @updated を全文取得してdescriptionを書き換え,要素数を返す.
   # xpathを指定した場合,xpathでの抜き出しも行う.
-  # waitは次のページへアクセスするまでのsleep秒数.
-  def fetch_page xpath = nil, wait = 3
+  # blockを指定した場合,descriptionをblockで編集する
+  def fetch_page xpath = nil, &block
     @updated.each_with_index { |item, idx|
-      info{ "fetch page #{idx +1}/#{@updated.size} : #{item.link}" }
+      info{ "fetch page #{idx +1}/#{@updated.size} : #{item.link} " }
       r = HTTPUtil.get(item.link)
       
       info{ "status : #{r.status}" }
       next if(r.status / 100 != 2)
       
-      item.description = xpath ? Nokogiri::HTML(r.body).xpath(xpath) : r.body
+      html = xpath ? Nokogiri::HTML(r.body).xpath(xpath) : r.body
+      item.description = block_given? ? block.call(html) : html
       
-      (wait > 0) && sleep(wait)
+      (@wait > 0) && sleep(@wait)
     }
   end
   
   # get_feed, filtering, read_saved, fetch_page, save_rss の一連の流れを行う.
-  # filterはtitleをregexで確認する. xpath, filter_regexがnilの場合はskipする.
-  def procedure_1 feed_url, filter_regex, xpath
+  # filterはtitleをregexで確認する. filter_regexがnilの場合はskipする.
+  # xpathかblockを渡した場合,その引数でfetch_pageを行う.
+  def procedure_1 feed_url, filter_regex, xpath, &block
     get_feed(feed_url)
     filter_regex && filtering{|item| item.title =~ filter_regex }
     read_saved
-    xpath && fetch_page(xpath)
+    (block_given? || xpath) && fetch_page(xpath, &block)
     save_rss
   end
-  
   
 end
