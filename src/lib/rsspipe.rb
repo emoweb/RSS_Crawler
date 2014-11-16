@@ -109,7 +109,8 @@ class RSSPipe
       # channelを設定
       @channel.each{|k,v| mk.channel.__send__("#{k}=", v) }
       # itemを追加
-      [@updated, @saved].each{|ia|
+      items = @updated.dup.concat(@saved).sort{ |i1,i2| i1.date <=> i2.date }
+      items.each{|ia|
         ia.each{|itm|
           ni = mk.items.new_item
           %w!title description link date!.each{|sym|

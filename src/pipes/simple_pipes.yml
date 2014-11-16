@@ -23,9 +23,3 @@
   - 'http://cyclist.sanspo.com/feed'
   - ''
   - '//div[@class="description clearfix"]'
--
-  - 'scienceplus2ch'
-  - 'http://www.scienceplus2ch.com/index.rdf'
-  - ''
-  - '//div[@class="main"]'
-
