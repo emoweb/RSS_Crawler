@@ -18,7 +18,8 @@ class RSSCrawler
     
     @logdir = Pathname(@conf[:log_directory])
     @logdir.mkpath
-    @logfile = @logdir + "#{Time.now.to_i}.log"
+    #@logfile = @logdir + "#{Time.now.to_i}.log"
+    @logfile = @logdir + "#{Time.now.strftime '%Y%m%d'}.log"
     
     @savedir = Pathname(@conf[:save_directory])
     @savedir.mkpath
