@@ -110,12 +110,10 @@ class RSSPipe
       @channel.each{|k,v| mk.channel.__send__("#{k}=", v) }
       # itemを追加
       items = @updated.dup.concat(@saved).sort{ |i1,i2| i1.date <=> i2.date }
-      items.each{|ia|
-        ia.each{|itm|
-          ni = mk.items.new_item
-          %w!title description link date!.each{|sym|
-            ni.__send__("#{sym}=", itm.__send__(sym))
-          }
+      items.each{|itm|
+        ni = mk.items.new_item
+        %w!title description link date!.each{|sym|
+          ni.__send__("#{sym}=", itm.__send__(sym))
         }
       }
     }.to_s
@@ -144,7 +142,8 @@ class RSSPipe
       info{ "status : #{r.status}" }
       next if(r.status / 100 != 2)
       
-      html = xpath ? Nokogiri::HTML(r.body).xpath(xpath) : r.body
+      html = r.text
+      html = xpath ? Nokogiri::HTML(html).xpath(xpath).to_s : html
       item.description = block_given? ? block.call(html) : html
       
       (@wait > 0) && sleep(@wait)
