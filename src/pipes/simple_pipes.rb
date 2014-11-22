@@ -13,3 +13,6 @@ conf[:procedure_1].each{ |name, url, fr, xp|
   RSS_PIPES[name.to_sym] = Proc.new{|pipe| pipe.procedure_1(*args) }
 }
 
+# pipe_procedure_1による取得と,正規表現による本文抜き出しを行う場合
+
+
