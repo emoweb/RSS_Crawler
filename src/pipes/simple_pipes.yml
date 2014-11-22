@@ -16,7 +16,7 @@
 -
   - 'wired'
   - 'http://wired.jp/feed/'
-  - ''
+  - '^PR:\s'
   - '//div[@class="article_maincontents"]'
 -
   - 'cyclist'
