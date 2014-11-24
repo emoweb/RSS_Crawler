@@ -10,7 +10,6 @@ RSS_PIPES[:dqnplus] = Proc.new{ |pipe|
     nil,
     '//div[@class="blogbody"]'
   ) {|h|
-    #IO.write("Z:/#{Time.now.to_i}.html", h)
     h.gsub!(/[\r\n]+/, '')
     h =~ %r#<\!-- google_ad_section_start -->(.*?)<div class="posted"></div>#
     $1
