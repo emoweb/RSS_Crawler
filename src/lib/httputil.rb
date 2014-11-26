@@ -88,7 +88,7 @@ module HTTPUtil
   #       post(url, data) -> Net::HTTPResponse
   # 
   # HTTPでpostする. 内容はdataに指定.
-  def post url, data, header = PostHeader
+  def post url, data, header = DEFAULT_HAEDER_GET.dup
     request url, :request_post, data, header
   end
   module_function :post

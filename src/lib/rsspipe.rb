@@ -46,6 +46,8 @@ class RSSPipe
   def info &bk; @l.info(@name, &bk); end
   
   # フィードを取得し, @dl_items に結合. set_channel = T なら channelも移す.
+  # urlにはRSS::Parser.parseに渡せる形式ならなんでも渡せる.
+  # なお,StringならURI, IOStreamならIOとして展開されるようだ.
   def get_feed url, set_channel = true
     info{"access: #{url} "}
     r = RSS::Parser.parse(url)
