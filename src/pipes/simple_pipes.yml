@@ -23,12 +23,9 @@
   - 'http://cyclist.sanspo.com/feed'
   - ''
   - '//div[@class="description clearfix"]'
+-
+  - 'itpro'
+  - 'http://itpro.nikkeibp.co.jp/rss/news.rdf'
+  - '^［PR］'
+  - '//div[@id="kiji"]'
 
-# pipe_procedure_1による取得と,正規表現による本文抜き出しを行う場合
-#:procedure_1_plus:
-#-
-#  - 'forest_impress'
-#  - 'http://www.forest.impress.co.jp/rss.xml'
-#  - ''
-#  - ''
-#
