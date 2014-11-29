@@ -74,13 +74,22 @@ module HTTPUtil
   # status codeがredirectかつLocationが存在する場合,
   # redirect_max > 0の間,自動的にリダイレクト先に飛ぶ
   def get url, referer = nil, header = nil, redirect_max = 5
+    # Header作成
     header ||= DEFAULT_HAEDER_GET.dup
-    #p [url,referer,header]
     header["Referer"] = referer.to_s if referer
+    
+    # Request
     r = request(url, :get, header)
-    if redirect_max > 0 and r.status / 100 == 3 and r["Location"]
-      r = get(r["Location"], url, header, redirect_max - 1)
+    
+    # Redirect判定と再帰リクエスト
+    if redirect_max > 0 and r.status / 100 == 3 and rdloc = r["Location"]
+      r = get(rdloc, url, header, redirect_max - 1)
+      r.redirect_history.push(rdloc)
     end
+    
+    # アクセスURLが空なら設定
+    r.redirect_history ||= [url]
+    
     return r
   end
   module_function :get
@@ -97,13 +106,20 @@ end
 
 
 # 独自の拡張メソッドをHTTP Responseに定義
-
 class Net::HTTPResponse
   # utf8に変換したbodyを返す
   def text; body && body.toutf8; end
   
   # ステータスコードを数値型で返す.
   def status; code.to_i; end
+  
+  # Redirect履歴を保存するArray. lastが最終的にアクセスしたURL.
+  attr_accessor :redirect_history
+  
+  # ResponseのURL
+  def access_url
+    @redirect_history.last
+  end
   
 end
 
