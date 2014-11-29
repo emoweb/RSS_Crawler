@@ -4,6 +4,17 @@
 # filter等はRegexpに変換される.
 # keyはname
 :pipe_procedure:
+  # 痛いニュース(ﾉ∀`) : http://blog.livedoor.jp/dqnplus/
+  dqnplus:
+    :feed: 'http://blog.livedoor.jp/dqnplus/index.rdf'
+    :fetch:
+      :xpath: '//div[@class="blogbody"]'
+      :replace:
+        - '[\r\n]'
+        -
+          - '^.*<\!-- google_ad_section_start -->(.*?)<div class="posted"></div>.*$'
+          - '\1'
+  
   # フリーソフトの樹 : http://freesoftnoki.blog87.fc2.com/
   freesoftnoki:
     :feed: 'http://feedproxy.google.com/frnoki'
