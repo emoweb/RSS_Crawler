@@ -135,20 +135,6 @@ class RSSPipe
     info{"filterd: #{befs} -> #{@dl_items.size}"}
   end
   
-  # get_feed, filtering, read_saved, fetch_page, save_rss の一連の流れを行う.
-  # filterはtitleをregexで確認する. filter_regexがnilの場合はskipする.
-  # xpathかblockを渡した場合,その引数でfetch_pageを行う.
-  def procedure_1 feed_url, filter_regex, xpath, &block
-    pipe_procedure({
-        :feed => feed_url,
-        :filter => filter_regex,
-        :fetch => (block_given? || xpath) && {
-          :xpath => xpath,
-          :edit => block
-        }
-    })
-  end
-  
   #       pipe_procedure(options) -> nil
   # 
   # 一般的なpipe処理を行う. 大抵のpipeはこれのみで処理が可能.
@@ -166,16 +152,18 @@ class RSSPipe
   #   :xpath => String
   #   :replace => [Regexp | [Regexp, String]]
   #   :edit => Proc
+  #   :abslink => True | False
   # }
   # このオプションが偽でない場合,feedのlinkを読み込む.
   # Procを渡した場合,そのProcにlinkを渡し,返り値をdescriptionにセットする.
   # ただし偽を返した場合はdescriptionを編集しない.
   # Hashを渡した場合,オプションに従いHTMLを加工する.
-  # :xpath : 指定したXPathでHTMLから抜き出しを行う.
-  # :relpace : 各要素を評価しgsubしていく.Stringを省略時は''として扱う.
-  # :edit : ProcにHTMLを渡し,戻り値をHTMLとする.
+  # :xpath    : 指定したXPathでHTMLから抜き出しを行う.
+  # :relpace  : 各要素を評価しgsubしていく.Stringを省略時は''として扱う.
+  # :edit     : ProcにHTMLを渡し,戻り値をHTMLとする.
+  # :abslink  : 相対リンクを絶対リンクに変換するか.
   # 複数オプションを指定した場合,加工された内容が次に渡されていく.
-  # 処理順は :xpath -> :relpace -> :edit
+  # 処理順は :xpath -> :relpace -> :edit -> :abslink
   # また,:fetchに渡すHashの全てのオプションは省略可能.
   # なお,Regexpを渡すところにStringを渡した場合はRegexpに変換される.
   # 
@@ -234,8 +222,9 @@ class RSSPipe
   # HTMLを処理しdescriptionを返す. 引数はURLと:fetchのHash.
   def get_description url, opt
     # get web page. 失敗時はnilにする.
-    r = page_access(url)
-    return nil unless r
+    res = page_access(url)
+    return nil unless res
+    r = res.text
     
     # XPath
     r = Nokogiri::HTML(r).xpath(opt[:xpath]).to_s if opt[:xpath]
@@ -250,11 +239,20 @@ class RSSPipe
     # edit for proc
     r = opt[:edit].call(r) if opt[:edit]
     
+    # リンク変換
+    if r && opt[:abslink]
+      base = URI.parse(res.access_url)
+      info{ base.to_s }
+      r.gsub!(/\s(href|src)=\"([^\"]+)\"/) {
+        %Q! #{$1}="#{base.merge($2)}"!
+      }
+    end
+    
     # return
     r
   end
   
-  #   page_access(String,Ture|False) => String | nil
+  #   page_access(String,Ture|False) => String | HTTPResponse
   # 
   # ページにアクセスし,結果を返す.
   def page_access url
@@ -263,29 +261,8 @@ class RSSPipe
     info{ "status : #{res.status}" }
     return nil if(res.status / 100 != 2)
     (@wait > 0) && sleep(@wait)
-    return res.text
+    return res
   end
-  
-    
-  # fetch_page(xpath = nil, wait = 3, &block) -> int
-  # 
-  # @updated を全文取得してdescriptionを書き換え,要素数を返す.
-  # xpathを指定した場合,xpathでの抜き出しも行う.
-  # blockを指定した場合,descriptionをblockで編集する
-#  def fetch_page xpath = nil, &block
-#    @updated.each_with_index { |item, idx|
-#      info{ "fetch page #{idx +1}/#{@updated.size} : #{item.link} " }
-#      r = HTTPUtil.get(item.link)
-#      
-#      info{ "status : #{r.status}" }
-#      next if(r.status / 100 != 2)
-#      
-#      html = r.text
-#      html = xpath ? Nokogiri::HTML(html).xpath(xpath).to_s : html
-#      item.description = block_given? ? block.call(html) : html
-#      
-#      (@wait > 0) && sleep(@wait)
-#    }
-#  end
+
   
 end

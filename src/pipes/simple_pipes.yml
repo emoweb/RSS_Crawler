@@ -9,6 +9,7 @@
     :filter: '^PR:\s'
     :fetch:
       :xpath: '//div[@class="story"]'
+      :abslink: 1
 
 
 # [[name,url,filter_regex,xpath]]
