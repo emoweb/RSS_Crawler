@@ -99,47 +99,6 @@ end
 # 独自の拡張メソッドをHTTP Responseに定義
 
 class Net::HTTPResponse
-  # Content-Typeに対応する拡張子. 存在しない場合はContent-Typeに等しい.
-  FILE_EXTENSION = {
-    "plain" => "txt", "richtext" => "rtf",
-    "msword" => "doc", "javascript" => "js", "shockwave-flash" => "swf",
-    "jpeg" => "jpg", "MP4A-LATM" => "m4a", "MP4V-ES" => "mp4",
-    "quicktime" => "qt", "msvideo" => "avi",
-    "ms-bmp" => "bmp",
-  }
-  # subtypeに対応するextensionを返す
-  def self.get_extension subtype
-    st = subtype.sub(/^x\-/,"")
-    ext = FILE_EXTENSION[st] || st
-    ".#{ext}"
-  end
-  
-  
-  #       split_content_type -> [Symbol,String,String] | nil
-  # 
-  # content_typeを解析して type, subtype, extension を返す.
-  # 既に解析されている場合はそのまま.
-  # e.g. 'text/html' => [ :text, "html", ".html" ]
-  # content_typeがnilならnil
-  def split_content_type
-    @content_type ||= begin
-      ct = content_type
-      ct && (%r!^(\w+)/([\w\.\-]+)! =~ ct) &&
-        [ $1.to_sym, $2, self.class.get_extension($2)]
-    end
-  end
-  
-  
-  # type(e.g. :text)だけを返す
-  def c_type
-    split_content_type && split_content_type[0]
-  end
-  
-  # ファイルの拡張子だけを返す. => nil | String
-  def file_extension
-    split_content_type && split_content_type[2]
-  end
-  
   # utf8に変換したbodyを返す
   def text; body && body.toutf8; end
   
