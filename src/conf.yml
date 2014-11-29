@@ -7,13 +7,16 @@
 
 # 実行するpipe名
 :exe_pipes:
-- :excite_koneta
-- :excite_odd
-- :wired
-- :cyclist
+# simple系
 - :dqnplus
-- :forest_impress
 - :freesoftnoki
+- :wired
+- :excite_odd
+- :excite_koneta
+- :cyclist
+- :forest_impress
+- :itpro
+# 独立系
 - :nikkan
 
 # timeout [s]
