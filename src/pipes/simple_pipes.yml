@@ -4,40 +4,40 @@
 # filter等はRegexpに変換される.
 # keyはname
 :pipe_procedure:
+  wired:
+    :feed: 'http://wired.jp/feed/'
+    :filter: '^PR:\s'
+    :fetch:
+      :xpath: '//div[@class="article_maincontents"]'
+      :replace:
+        - '[\r\n]'
+        - ['<!-- impAct AD -->.*</div>', '</div>']
+      :abslink: true
+  
+  excite_odd:
+    :feed: 'http://www.excite.co.jp/News/rss/odd/'
+    :filter: '^PR:\s'
+    :fetch:
+      :xpath: '//div[@class="story"]'
+      :abslink: true
+  
   excite_koneta:
     :feed: 'http://www.excite.co.jp/News/rss/source/?source=Excite'
     :filter: '^PR:\s'
     :fetch:
       :xpath: '//div[@class="story"]'
-      :abslink: 1
-
-
-# [[name,url,filter_regex,xpath]]
-# emptyでnil
-#:procedure_1:
-#-
-#  - 'excite_koneta'
-#  - 'http://www.excite.co.jp/News/rss/source/?source=Excite'
-#  - '^PR:\s'
-#  - '//div[@class="story"]'
-#-
-#  - 'excite_odd'
-#  - 'http://www.excite.co.jp/News/rss/odd/'
-#  - '^PR:\s'
-#  - '//div[@class="story"]'
-#-
-#  - 'wired'
-#  - 'http://wired.jp/feed/'
-#  - '^PR:\s'
-#  - '//div[@class="article_maincontents"]'
-#-
-#  - 'cyclist'
-#  - 'http://cyclist.sanspo.com/feed'
-#  - ''
-#  - '//div[@class="description clearfix"]'
-#-
-#  - 'itpro'
-#  - 'http://itpro.nikkeibp.co.jp/rss/news.rdf'
-#  - '^［PR］'
-#  - '//div[@id="kiji"]'
-#
+      :abslink: true
+      
+  cyclist:
+    :feed: 'http://cyclist.sanspo.com/feed'
+    :fetch:
+      :xpath: '//div[@class="description clearfix"]'
+      :abslink: true
+  
+  itpro:
+    :feed: 'http://itpro.nikkeibp.co.jp/rss/news.rdf'
+    :filter: '^［PR］'
+    :fetch:
+      :xpath: '//div[@id="kiji"]'
+      :abslink: true
+      
