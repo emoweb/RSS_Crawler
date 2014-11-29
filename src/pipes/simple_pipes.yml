@@ -4,6 +4,18 @@
 # filter等はRegexpに変換される.
 # keyはname
 :pipe_procedure:
+  # フリーソフトの樹 : http://freesoftnoki.blog87.fc2.com/
+  freesoftnoki:
+    :feed: 'http://feedproxy.google.com/frnoki'
+    :fetch:
+      :xpath: '//td[@class="main_txt"]'
+      :replace:
+        - '[\r\n]'
+        - ['\s*([<>])\s*', '\1']
+        - ['<div align=\"left\">.*(</td>)', '\1']
+      :abslink: true
+  
+  # Wired
   wired:
     :feed: 'http://wired.jp/feed/'
     :filter: '^PR:\s'
