@@ -28,12 +28,24 @@
       :xpath: '//div[@class="story"]'
       :abslink: true
       
+  # Cyclist
   cyclist:
     :feed: 'http://cyclist.sanspo.com/feed'
     :fetch:
       :xpath: '//div[@class="description clearfix"]'
       :abslink: true
+      
+  # 窓の杜 : http://www.forest.impress.co.jp/
+  forest_impress:
+    :feed: 'http://www.forest.impress.co.jp/rss.xml'
+    :fetch:
+      :xpath: '//div[@class="main-contents mainContents"]'
+      :replace:
+        - '[\r\n]'
+        - ['\s*([<>])\s*', '\1']
+      :abslink: true
   
+  # ITPro
   itpro:
     :feed: 'http://itpro.nikkeibp.co.jp/rss/news.rdf'
     :filter: '^［PR］'
