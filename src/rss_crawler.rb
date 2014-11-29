@@ -26,13 +26,19 @@ class RSSCrawler
     
     @logger = CrawlLogger.new(@logfile.to_s)
     @logger.def_progname = "main"
+    
+    # debugオプション. crawl前にpipeに転送される.
+    @debug = {}
   end
+  attr_accessor :debug
   
   # nameのpipeをcrawlする
   def crawl_rss name
     proc = RSS_PIPES[name]
     if proc
-      proc.call( RSSPipe.new(@savedir, @logger, name, @conf[:fp_wait]) )
+      pipe = RSSPipe.new(@savedir, @logger, name, @conf[:fp_wait])
+      pipe.debug.merge!(@debug) # オプション上書き
+      proc.call(pipe)
     else
       @logger.error{ "#{name} is empty" }
     end

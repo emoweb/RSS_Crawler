@@ -1,31 +1,42 @@
 ---
 
+# pipe_procedureの引数そのまま.
+# filter等はRegexpに変換される.
+# keyはname
+:pipe_procedure:
+  excite_koneta:
+    :feed: 'http://www.excite.co.jp/News/rss/source/?source=Excite'
+    :filter: '^PR:\s'
+    :fetch:
+      :xpath: '//div[@class="story"]'
+
+
 # [[name,url,filter_regex,xpath]]
 # emptyでnil
-:procedure_1:
--
-  - 'excite_koneta'
-  - 'http://www.excite.co.jp/News/rss/source/?source=Excite'
-  - '^PR:\s'
-  - '//div[@class="story"]'
--
-  - 'excite_odd'
-  - 'http://www.excite.co.jp/News/rss/odd/'
-  - '^PR:\s'
-  - '//div[@class="story"]'
--
-  - 'wired'
-  - 'http://wired.jp/feed/'
-  - '^PR:\s'
-  - '//div[@class="article_maincontents"]'
--
-  - 'cyclist'
-  - 'http://cyclist.sanspo.com/feed'
-  - ''
-  - '//div[@class="description clearfix"]'
--
-  - 'itpro'
-  - 'http://itpro.nikkeibp.co.jp/rss/news.rdf'
-  - '^［PR］'
-  - '//div[@id="kiji"]'
-
+#:procedure_1:
+#-
+#  - 'excite_koneta'
+#  - 'http://www.excite.co.jp/News/rss/source/?source=Excite'
+#  - '^PR:\s'
+#  - '//div[@class="story"]'
+#-
+#  - 'excite_odd'
+#  - 'http://www.excite.co.jp/News/rss/odd/'
+#  - '^PR:\s'
+#  - '//div[@class="story"]'
+#-
+#  - 'wired'
+#  - 'http://wired.jp/feed/'
+#  - '^PR:\s'
+#  - '//div[@class="article_maincontents"]'
+#-
+#  - 'cyclist'
+#  - 'http://cyclist.sanspo.com/feed'
+#  - ''
+#  - '//div[@class="description clearfix"]'
+#-
+#  - 'itpro'
+#  - 'http://itpro.nikkeibp.co.jp/rss/news.rdf'
+#  - '^［PR］'
+#  - '//div[@id="kiji"]'
+#
