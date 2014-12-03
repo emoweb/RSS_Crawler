@@ -5,7 +5,7 @@
 
 # 実行するpipe名
 :exe_pipes:
-- :nikkan
+- :techcrunch
 
 # timeout [s]
 :timeout: 3000

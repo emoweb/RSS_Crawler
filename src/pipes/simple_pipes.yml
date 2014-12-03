@@ -4,6 +4,11 @@
 # filter等はRegexpに変換される.
 # keyはname
 :pipe_procedure:
+  # TechCrunch Japan » TechCrunch : http://jp.techcrunch.com/
+  techcrunch:
+    :feed: 'http://jp.techcrunch.com/feed/'
+    :filter: '^PR:\s'
+  
   # 痛いニュース(ﾉ∀`) : http://blog.livedoor.jp/dqnplus/
   dqnplus:
     :feed: 'http://blog.livedoor.jp/dqnplus/index.rdf'
