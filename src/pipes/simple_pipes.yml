@@ -7,7 +7,7 @@
   # TechCrunch Japan » TechCrunch : http://jp.techcrunch.com/
   techcrunch:
     :feed: 'http://jp.techcrunch.com/feed/'
-    :filter: '^PR:\s'
+    :filter: '^P[Rr]:\s'
   
   # 痛いニュース(ﾉ∀`) : http://blog.livedoor.jp/dqnplus/
   dqnplus:
