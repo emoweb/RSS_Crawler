@@ -275,7 +275,7 @@ class RSSPipe
     # リンク変換
     if r && opt[:abslink]
       base = URI.parse(res.access_url)
-      info{ base.to_s }
+      #debug{ base.to_s }
       r.gsub!(/\s(href|src)=\"([^\"]+)\"/) {
         %Q! #{$1}="#{base.merge($2)}"!
       }
