@@ -111,19 +111,13 @@ class RSSPipe
   
   # 保存対象(@updated, @saved)よりRSSを生成し,保存する.
   def save_rss
-    @l.info(@name){ 'make & save RSS' }
-#    r = RSS::Maker.make("2.0"){|mk|
-#      # channelを設定
-#      @channel.each{|k,v| mk.channel.__send__("#{k}=", v) }
-#      # itemを追加
-#      items = @updated.dup.concat(@saved).sort{ |i1,i2| i1.date <=> i2.date }
-#      items.each{|itm|
-#        ni = mk.items.new_item
-#        %w!title description link date!.each{|sym|
-#          ni.__send__("#{sym}=", itm.__send__(sym))
-#        }
-#      }
-#    }.to_s
+    # updateが無い場合はskip
+    if @updated.empty?
+      @l.info(@name){ 'save RSS : skip'}
+      return
+    end
+    
+    @l.info(@name){ 'save RSS' }
     
     r = RSS20.new
     r.channel = @channel
