@@ -40,6 +40,8 @@
       :replace:
         - '[\r\n]'
         - ['<!-- impAct AD -->.*</div>', '</div>']
+        - ['(<\w+)\sclass=\"[^\"]+">', '\1>']
+        - ['\s*([<>])\s*', '\1']
       :abslink: true
   
   excite_odd:
