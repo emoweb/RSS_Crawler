@@ -18,6 +18,8 @@
 - :itpro
 # 独立系
 - :nikkan
+- :techon
+- :nhk_gendai
 
 # timeout [s]
 :timeout: 3000
