@@ -44,7 +44,7 @@ class RSSPipe
     # debug設定. 標準は全てfalse.
     @debug = {}
   end
-  attr_reader :updated, :channel  
+  attr_reader :updated, :channel
   attr_accessor :wait
   attr_accessor :debug
   
@@ -54,9 +54,12 @@ class RSSPipe
   # urlにはRSS::Parser.parseに渡せる形式ならなんでも渡せる.
   # なお,StringならURI, IOStreamならIOとして展開されるようだ.
   def get_feed url, set_channel = true
+    # feedをparseして追加
     info{"access: #{url} "}
     r = RSS::Parser.parse(url)
     @dl_items.concat(r.items)
+    
+    # channelをset
     if set_channel then
       # 共通項目をコピー
       ch = r.channel
@@ -71,6 +74,9 @@ class RSSPipe
     end
   end
   
+  # 直接items(RSS::Rss::Channel::Item)のArrayを渡す場合
+  attr_accessor :dl_items
+  
   # 前回取得した分を読み出し,
   # 更新された部分を @updated, 読み出し分にしか存在しない分を @deleted,
   # どちらにも存在する分を @saved に分類する. @saved には読み出し分が入る.
@@ -78,10 +84,10 @@ class RSSPipe
   def read_saved compare_f = Proc.new{ |i| i.date }
     # ファイル読み込み
     prev = if @savefile.file?
-      @l.info(@name){ 'cache loading'}
+      info{ 'cache loading'}
       RSS::Parser.parse(@savefile).items
     else
-      @l.info(@name){ 'The preview of results is empty'}
+      info{ 'The preview of results is empty'}
       []
     end
     
@@ -97,11 +103,7 @@ class RSSPipe
       @updated.push(i) unless ssv.include?(compare_f.call(i))
     }
     prev.each { |i|
-      if sdl.include?(compare_f.call(i)) then
-        @saved
-      else
-        @deleted
-      end.push(i)
+      (sdl.include?(compare_f.call(i)) ? @saved : @deleted).push(i)
     }
     info{
       "classification completed. update:#{@updated.size}" +
@@ -143,6 +145,8 @@ class RSSPipe
   # 一般的なpipe処理を行う. 大抵のpipeはこれのみで処理が可能.
   # オプションは省略が容易なようにHashで渡す.
   # 使えるオプションは下記の通り.
+  # :fetchについてはfetchメソッドを参照.
+  # なお,Regexpを渡すところにStringを渡した場合はRegexpに変換される.
   # 
   # :feed => String | StringIO
   # フィードのURL. StringならURIとして,StringIOならStringとして展開.
@@ -157,18 +161,6 @@ class RSSPipe
   #   :edit => Proc
   #   :abslink => True | False
   # }
-  # このオプションが偽でない場合,feedのlinkを読み込む.
-  # Procを渡した場合,そのProcにlinkを渡し,返り値をdescriptionにセットする.
-  # ただし偽を返した場合はdescriptionを編集しない.
-  # Hashを渡した場合,オプションに従いHTMLを加工する.
-  # :xpath    : 指定したXPathでHTMLから抜き出しを行う.
-  # :relpace  : 各要素を評価しgsubしていく.Stringを省略時は''として扱う.
-  # :edit     : ProcにHTMLを渡し,戻り値をHTMLとする.
-  # :abslink  : 相対リンクを絶対リンクに変換するか.
-  # 複数オプションを指定した場合,加工された内容が次に渡されていく.
-  # 処理順は :xpath -> :relpace -> :edit -> :abslink
-  # また,:fetchに渡すHashの全てのオプションは省略可能.
-  # なお,Regexpを渡すところにStringを渡した場合はRegexpに変換される.
   # 
   def pipe_procedure options = {}
     # :feed
@@ -196,22 +188,46 @@ class RSSPipe
   end
   
   
-  #   fetch(Hash|Proc|nil) -> nil
+  #   fetch(nil | Proc | {
+  #     :xpath => String
+  #     :replace => [Regexp | [Regexp, String]]
+  #     :edit => Proc
+  #     :abslink => True | False
+  #     :get_title => True | False | Proc
+  #   }) => nil
   # 
-  # optionsはpipe_procedureの:fetchそのもの.
+  # nilならfetch処理は行わない.
+  # 
+  # Procを渡した場合,そのProcにitemを渡し,戻り値をdescriptionにセットする.
+  # ただし偽を返した場合はdescriptionを編集しない.
+  # titleの更新が必要な場合はProc中で行う.
+  # 
+  # Hashを渡した場合,オプションに従いHTMLを加工する.
+  # :xpath    : 指定したXPathでHTMLから抜き出しを行う.
+  # :relpace  : 各要素を評価しgsubしていく.Stringを省略時は''として扱う.
+  # :edit     : ProcにHTMLを渡し,戻り値をHTMLとする.
+  # :abslink  : 相対リンクを絶対リンクに変換するか.
+  # :get_title: 真ならページのtitle要素に従ってtitleを更新する.
+  # ProcならProcにtitle要素を渡して戻ってきた値をtitleとする.
+  # 
+  # 複数オプションを指定した場合,加工された内容が次に渡されていく.
+  # 処理順は :get_title -> :xpath -> :relpace -> :edit -> :abslink
+  # また,:fetchに渡すHashの全てのオプションは省略可能.
+  # なお,Regexpを渡すところにStringを渡した場合はRegexpに変換される.
+  # 
   def fetch options
     return nil unless options
     
     # proc生成
     fetch_proc = case options
     when Proc; options
-    when Hash; proc{ |url| get_description(url,options) }
+    when Hash; proc{ |item| get_description(item,options) }
     end
     
     # ページを順に読み込み
     @updated.each_with_index { |item, idx|
       info{ "fetch page #{idx +1}/#{@updated.size}" }
-      item.description = fetch_proc.call(item.link) || item.description
+      item.description = fetch_proc.call(item) || item.description
       
       # debug用. descriptionを個別保存.
       if @debug[:save_description]
@@ -220,17 +236,31 @@ class RSSPipe
     }
   end
   
-  #   get_description(String, Hash) => String | nil
+  #   get_description(String|Items, Hash) => String | nil
   # 
+  # Itemsは RSS::Rss::Channel::Items のこと.
+  # Stringで無い場合はItemsとして扱われる.
   # HTMLを処理しdescriptionを返す. 引数はURLと:fetchのHash.
-  def get_description url, opt
+  def get_description item, opt
+    # itemのclassを判断
+    url = (item.is_a? String) ? item : item.link
+    
     # get web page. 失敗時はnilにする.
     res = page_access(url)
     return nil unless res
     r = res.text
     
-    # XPath
-    r = Nokogiri::HTML(r).xpath(opt[:xpath]).to_s if opt[:xpath]
+    # title更新flag
+    get_title = (! item.is_a?(String)) && opt[:get_title]
+    # Nokogiriパース
+    xp = Nokogiri::HTML(r) if get_title || opt[:xpath]
+    # title更新
+    if get_title
+      gtp = opt[:get_title].is_a?(Proc) ? opt[:get_title] : proc{|v|v}
+      item.title = gtp.call(xp.xpath('//title').text)
+    end
+    # XPath適用. nil(=マッチなし)なら戻る.
+    r = xp.xpath(opt[:xpath]).to_s if opt[:xpath]
     return nil unless r
     
     # Regex relplace
