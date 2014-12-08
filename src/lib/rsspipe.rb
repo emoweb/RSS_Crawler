@@ -277,6 +277,7 @@ class RSSPipe
       base = URI.parse(res.access_url)
       #debug{ base.to_s }
       r.gsub!(/\s(href|src)=\"([^\"]+)\"/) {
+        #@l.debug{ "#{$2} -> #{base.merge($2)}" }
         %Q! #{$1}="#{base.merge($2)}"!
       }
     end

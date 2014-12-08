@@ -81,5 +81,8 @@
     :filter: '^［PR］'
     :fetch:
       :xpath: '//div[@id="kiji"]'
+      :replace:
+        - ['("[^"]+)&amp;([^"]+")', '\1&\2']
+        - ['<div\s((class|style|id)=\"[^\"]*\"\s*)*>', '<div>']
       :abslink: true
       

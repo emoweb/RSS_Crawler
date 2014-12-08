@@ -8,4 +8,5 @@ require testdir + '../src/rss_crawler'
 
 rc = RSSCrawler.new(testdir + 'testconf.yml')
 rc.debug[:save_description] = true
+rc.logger.loglevel = 3 # debug
 rc.crawl_all

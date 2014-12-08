@@ -30,7 +30,7 @@ class RSSCrawler
     # debugオプション. crawl前にpipeに転送される.
     @debug = {}
   end
-  attr_accessor :debug
+  attr_accessor :debug, :logger
   
   # nameのpipeをcrawlする
   def crawl_rss name
