@@ -4,6 +4,14 @@
 # filter等はRegexpに変換される.
 # keyはname
 :pipe_procedure:
+  # Gizmodo : http://www.gizmodo.jp/
+  gizmodo:
+    :feed: 'http://www.gizmodo.jp/index.xml'
+    :fetch:
+      :xpath: '//div[@class="cXenseParse"]'
+      :replace:
+        - '[\r\n]'
+        
   # TechCrunch Japan » TechCrunch : http://jp.techcrunch.com/
   techcrunch:
     :feed: 'http://jp.techcrunch.com/feed/'

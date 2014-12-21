@@ -256,6 +256,7 @@ class RSSPipe
     xp = Nokogiri::HTML(r) if get_title || opt[:xpath]
     # title更新
     if get_title
+      # procの場合はtitleをprocで加工して適用
       gtp = opt[:get_title].is_a?(Proc) ? opt[:get_title] : proc{|v|v}
       item.title = gtp.call(xp.xpath('//title').text)
     end
