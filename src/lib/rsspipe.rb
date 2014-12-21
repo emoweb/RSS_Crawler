@@ -155,13 +155,6 @@ class RSSPipe
   # Regexpならtitleと比較し一致すれば除外,
   # Procならitemを渡し,真を返せば除外する.
   # 
-  # :fetch => nil | Proc | {
-  #   :xpath => String
-  #   :replace => [Regexp | [Regexp, String]]
-  #   :edit => Proc
-  #   :abslink => True | False
-  # }
-  # 
   def pipe_procedure options = {}
     # :feed
     get_feed(options[:feed])
@@ -194,6 +187,7 @@ class RSSPipe
   #     :edit => Proc
   #     :abslink => True | False
   #     :get_title => True | False | Proc
+  #     :update_url => False | True | String
   #   }) => nil
   # 
   # nilならfetch処理は行わない.
@@ -208,7 +202,10 @@ class RSSPipe
   # :edit     : ProcにHTMLを渡し,戻り値をHTMLとする.
   # :abslink  : 相対リンクを絶対リンクに変換するか.
   # :get_title: 真ならページのtitle要素に従ってtitleを更新する.
-  # ProcならProcにtitle要素を渡して戻ってきた値をtitleとする.
+  #   ProcならProcにtitle要素を渡して戻ってきた値をtitleとする.
+  # :update_url: 偽以外ならitemのURLをfetchで最終的にアクセスしたURLに書き換える.
+  #   Stringの場合はオプションとして解釈する.
+  #   'rm_query' : URLのCGIオプションを削除する.
   # 
   # 複数オプションを指定した場合,加工された内容が次に渡されていく.
   # 処理順は :get_title -> :xpath -> :relpace -> :edit -> :abslink
@@ -242,8 +239,11 @@ class RSSPipe
   # Stringで無い場合はItemsとして扱われる.
   # HTMLを処理しdescriptionを返す. 引数はURLと:fetchのHash.
   def get_description item, opt
+    # itemがStringであることのflag
+    stritem = item.is_a?(String)
+    
     # itemのclassを判断
-    url = (item.is_a? String) ? item : item.link
+    url = stritem ? item : item.link
     
     # get web page. 失敗時はnilにする.
     res = page_access(url)
@@ -251,7 +251,7 @@ class RSSPipe
     r = res.text
     
     # title更新flag
-    get_title = (! item.is_a?(String)) && opt[:get_title]
+    get_title = (!stritem) && opt[:get_title]
     # Nokogiriパース
     xp = Nokogiri::HTML(r) if get_title || opt[:xpath]
     # title更新
@@ -260,6 +260,15 @@ class RSSPipe
       gtp = opt[:get_title].is_a?(Proc) ? opt[:get_title] : proc{|v|v}
       item.title = gtp.call(xp.xpath('//title').text)
     end
+    
+    # URL更新処理
+    upurl = opt[:update_url]
+    if (!stritem) && upurl then
+      u = res.access_url
+      u.sub!(/\?.*$/, '') if(upurl == 'rm_query')
+      item.link = u
+    end
+    
     # XPath適用. nil(=マッチなし)なら戻る.
     r = xp.xpath(opt[:xpath]).to_s if opt[:xpath]
     return nil unless r

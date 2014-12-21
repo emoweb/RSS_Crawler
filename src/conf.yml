@@ -8,6 +8,7 @@
 # 実行するpipe名
 :exe_pipes:
 # simple系
+- :gizmodo
 - :dqnplus
 - :freesoftnoki
 - :wired

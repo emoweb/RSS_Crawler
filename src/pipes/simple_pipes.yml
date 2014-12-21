@@ -11,7 +11,8 @@
       :xpath: '//div[@class="cXenseParse"]'
       :replace:
         - '[\r\n]'
-        
+      :update_url: 'rm_query'
+  
   # TechCrunch Japan » TechCrunch : http://jp.techcrunch.com/
   techcrunch:
     :feed: 'http://jp.techcrunch.com/feed/'
