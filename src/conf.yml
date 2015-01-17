@@ -21,6 +21,9 @@
 - :nikkan
 - :techon
 - :nhk_gendai
+# nhk news
+- :nhknews0
+- :nhknews3
 
 # timeout [s]
 :timeout: 3000
