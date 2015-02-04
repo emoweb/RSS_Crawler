@@ -4,6 +4,16 @@
 # filter等はRegexpに変換される.
 # keyはname
 :pipe_procedure:
+  # ロシアの声 : http://japanese.ruvr.ru/
+  ruvr:
+    :feed: 'http://japanese.ruvr.ru/rss/export_all.xml'
+    :fetch:
+      :xpath: '//div[@class="limit-weight"][1]'
+      :replace:
+        - '[\r\n]'
+        - ['\s*([<>])\s*', '\1']
+        - ['<div\s((class|style|id)=\"[^\"]*\"\s*)*>', '<div>']
+  
   # Gizmodo : http://www.gizmodo.jp/
   gizmodo:
     :feed: 'http://www.gizmodo.jp/index.xml'
