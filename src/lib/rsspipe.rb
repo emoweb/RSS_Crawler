@@ -271,7 +271,7 @@ class RSSPipe
     
     # XPath適用. nil(=マッチなし)なら戻る.
     r = xp.xpath(opt[:xpath]).to_s if opt[:xpath]
-    return nil unless r
+    return nil if r.empty?
     
     # Regex relplace
     reparr = opt[:replace] || [] # nilなら空配列を処理
