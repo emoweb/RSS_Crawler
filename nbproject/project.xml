@@ -5,6 +5,7 @@
         <data xmlns="http://www.netbeans.org/ns/ruby-project/1">
             <name>rss_crawler</name>
             <source-roots>
+                <root id="src.tools.dir"/>
                 <root id="src.src.dir"/>
             </source-roots>
             <test-roots>

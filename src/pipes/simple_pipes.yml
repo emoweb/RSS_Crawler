@@ -1,5 +1,14 @@
 ---
 
+# よく使うデータの参照元
+dmy:
+  # 汎用replace一覧
+  short_html:
+    &short_html
+    - '[\r\n]'
+    - ['\s*([<>])\s*', '\1']
+    - ['<div\s((class|style|id)=\"[^\"]*\"\s*)*>', '<div>']
+
 # pipe_procedureの引数そのまま.
 # filter等はRegexpに変換される.
 # keyはname
@@ -13,6 +22,14 @@
         - '[\r\n]'
         - ['\s*([<>])\s*', '\1']
         - ['<div\s((class|style|id)=\"[^\"]*\"\s*)*>', '<div>']
+  
+  # GIGAZINE
+  gigazine:
+    :feed: 'http://gigazine.net/news/rss_2.0/'
+    :filter: '^PR:\s'
+    :fetch:
+      :xpath: '//p[@class="preface"]'
+      :replace: *short_html
   
   # Gizmodo : http://www.gizmodo.jp/
   gizmodo:
