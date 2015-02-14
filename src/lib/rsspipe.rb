@@ -81,7 +81,7 @@ class RSSPipe
   # 更新された部分を @updated, 読み出し分にしか存在しない分を @deleted,
   # どちらにも存在する分を @saved に分類する. @saved には読み出し分が入る.
   # compare_f はitem重複比較用のProc.
-  def read_saved compare_f = Proc.new{ |i| i.date }
+  def read_saved compare_f = Proc.new{ |i| i.date || i.dc_date }
     # ファイル読み込み
     prev = if @savefile.file?
       info{ 'cache loading'}
@@ -124,7 +124,7 @@ class RSSPipe
     r = RSS20.new
     r.channel = @channel
     r.items = @updated.dup.concat(@saved).collect{ |item|
-      h = {:pubDate => item.date}
+      h = {:pubDate =>  item.date || item.dc_date }
       [:title, :link, :description].each{ |sym| h[sym] = item.__send__(sym) }
       h
     }
