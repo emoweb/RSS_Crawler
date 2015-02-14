@@ -5,9 +5,9 @@ dmy:
   # HTMLの冗長データを削除
   short_html:
     &short_html
-    - '[\r\n]'
-    - ['\s*([<>])\s*', '\1']
-    - ['<div\s((class|style|id)=\"[^\"]*\"\s*)*>', '<div>']
+    - &cut_crlf '[\r\n]'
+    - &cut_tagspace ['\s*([<>])\s*', '\1']
+    - &cut_divclass ['<div\s((class|style|id)=\"[^\"]*\"\s*)*>', '<div>']
 
 # pipe_procedureの引数そのまま.
 # filter等はRegexpに変換される.
@@ -26,15 +26,17 @@ dmy:
     :filter: '^PR:\s'
     :fetch:
       :xpath: '//p[@class="preface"]'
-      :replace: *short_html
+      :replace: [
+        *cut_crlf, *cut_tagspace, *cut_divclass,
+        ['<br><br><b>・関連記事.*</p>', '</p>']
+      ]
   
   # Gizmodo : http://www.gizmodo.jp/
   gizmodo:
     :feed: 'http://www.gizmodo.jp/index.xml'
     :fetch:
       :xpath: '//div[@class="cXenseParse"]'
-      :replace:
-        - '[\r\n]'
+      :replace: [ *cut_crlf ]
       :update_url: 'rm_query'
   
   # TechCrunch Japan » TechCrunch : http://jp.techcrunch.com/
@@ -48,7 +50,7 @@ dmy:
     :fetch:
       :xpath: '//div[@class="blogbody"]'
       :replace:
-        - '[\r\n]'
+        - *cut_crlf
         -
           - '^.*<\!-- google_ad_section_start -->(.*?)<div class="posted"></div>.*$'
           - '\1'
@@ -59,8 +61,8 @@ dmy:
     :fetch:
       :xpath: '//td[@class="main_txt"]'
       :replace:
-        - '[\r\n]'
-        - ['\s*([<>])\s*', '\1']
+        - *cut_crlf
+        - *cut_tagspace
         - ['<div align=\"left\">.*(</td>)', '\1']
       :abslink: true
   
@@ -71,10 +73,10 @@ dmy:
     :fetch:
       :xpath: '//div[@class="article_maincontents"]'
       :replace:
-        - '[\r\n]'
+        - *cut_crlf
         - ['<!-- impAct AD -->.*</div>', '</div>']
         - ['(<\w+)\sclass=\"[^\"]+">', '\1>']
-        - ['\s*([<>])\s*', '\1']
+        - *cut_tagspace
       :abslink: true
   
   excite_odd:
@@ -103,9 +105,7 @@ dmy:
     :feed: 'http://www.forest.impress.co.jp/rss.xml'
     :fetch:
       :xpath: '//div[@class="main-contents mainContents"]'
-      :replace:
-        - '[\r\n]'
-        - ['\s*([<>])\s*', '\1']
+      :replace: [ *cut_crlf, *cut_tagspace ]
       :abslink: true
   
   # ITPro
@@ -116,6 +116,6 @@ dmy:
       :xpath: '//div[@id="kiji"]'
       :replace:
         - ['("[^"]+)&amp;([^"]+")', '\1&\2']
-        - ['<div\s((class|style|id)=\"[^\"]*\"\s*)*>', '<div>']
+        - *cut_divclass
       :abslink: true
       
