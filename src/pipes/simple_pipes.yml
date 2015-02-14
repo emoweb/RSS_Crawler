@@ -2,7 +2,7 @@
 
 # よく使うデータの参照元
 dmy:
-  # 汎用replace一覧
+  # HTMLの冗長データを削除
   short_html:
     &short_html
     - '[\r\n]'
@@ -18,10 +18,7 @@ dmy:
     :feed: 'http://japanese.ruvr.ru/rss/export_all.xml'
     :fetch:
       :xpath: '//div[@class="limit-weight"][1]'
-      :replace:
-        - '[\r\n]'
-        - ['\s*([<>])\s*', '\1']
-        - ['<div\s((class|style|id)=\"[^\"]*\"\s*)*>', '<div>']
+      :replace: *short_html
   
   # GIGAZINE
   gigazine:
