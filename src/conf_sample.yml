@@ -1,0 +1,65 @@
+---
+
+# 保存先
+:save_directory: 'd:/Dropbox/Public/feeds/'
+
+# ログ保存先
+:log_directory: 'd:/var/rssc/'
+
+# 実行するpipe名
+:exe_pipes:
+# simple系
+# src/pipes/simple_pipes.yml に詳しく記載.
+# :gizmodo : Gizmodo
+- :gizmodo
+# :dqnplus : 痛いニュース(ﾉ∀`)
+- :dqnplus
+# :freesoftnoki : フリーソフトの樹
+- :freesoftnoki
+# :wired : Wired
+- :wired
+# :cyclist : Cyclist
+- :cyclist
+# :forest_impress : 窓の杜
+- :forest_impress
+# :itpro : ITPro
+- :itpro
+# :ruvr : ロシアの声
+- :ruvr
+# :gigazine : GIGAZINE
+- :gigazine
+# 
+# 独立系
+# src/pipes/<:抜きフィード名>.rb に詳しく記載.
+# :nikkan : 日刊工業新聞 Business Line 新着ニュース
+- :nikkan
+# :techon : 日経テクノロジーオンライン
+- :techon
+# 
+# NHKニュース
+# src/pipes/nhk_news.rb で定義
+# :nhknews-live : JUST IN
+# :nhknews0 : 主要ニュース
+# :nhknews1 : 社会
+# :nhknews2 : 文化・エンタメ
+# :nhknews3 : 科学・医療
+# :nhknews4 : 政治
+# :nhknews5 : 経済
+# :nhknews6 : 国際
+# :nhknews7 : スポーツ
+- :nhknews-live
+- :nhknews1
+- :nhknews2
+- :nhknews3
+- :nhknews4
+- :nhknews5
+- :nhknews6
+- :nhknews7
+
+# timeout [s]
+:timeout: 3000
+
+# fetch page wait
+:fp_wait: 5
+
+

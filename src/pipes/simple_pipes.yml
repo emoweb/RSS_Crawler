@@ -79,20 +79,7 @@ dmy:
         - *cut_tagspace
       :abslink: true
   
-  excite_odd:
-    :feed: 'http://www.excite.co.jp/News/rss/odd/'
-    :filter: '^PR:\s'
-    :fetch:
-      :xpath: '//div[@class="story"]'
-      :abslink: true
-  
-  excite_koneta:
-    :feed: 'http://www.excite.co.jp/News/rss/source/?source=Excite'
-    :filter: '^PR:\s'
-    :fetch:
-      :xpath: '//div[@class="story"]'
-      :abslink: true
-      
+
   # Cyclist
   cyclist:
     :feed: 'http://cyclist.sanspo.com/feed'
@@ -117,5 +104,21 @@ dmy:
       :replace:
         - ['("[^"]+)&amp;([^"]+")', '\1&\2']
         - *cut_divclass
+      :abslink: true
+  
+  
+  # 廃止検討
+  excite_odd:
+    :feed: 'http://www.excite.co.jp/News/rss/odd/'
+    :filter: '^PR:\s'
+    :fetch:
+      :xpath: '//div[@class="story"]'
+      :abslink: true
+  
+  excite_koneta:
+    :feed: 'http://www.excite.co.jp/News/rss/source/?source=Excite'
+    :filter: '^PR:\s'
+    :fetch:
+      :xpath: '//div[@class="story"]'
       :abslink: true
       
