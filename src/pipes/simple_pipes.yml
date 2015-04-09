@@ -13,6 +13,14 @@ dmy:
 # filter等はRegexpに変換される.
 # keyはname
 :pipe_procedure:
+  # NHK解説アーカイブス
+  nhk_kaisetsu:
+    :feed: 'http://www.nhk.or.jp/kaisetsu-blog/index.xml'
+    :fetch:
+      :xpath: '//div[@class="article"]'
+      :replace: *short_html
+      :abslink: true  
+  
   # GIGAZINE
   gigazine:
     :feed: 'http://gigazine.net/news/rss_2.0/'
