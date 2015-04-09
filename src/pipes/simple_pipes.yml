@@ -13,13 +13,6 @@ dmy:
 # filter等はRegexpに変換される.
 # keyはname
 :pipe_procedure:
-  # ロシアの声 : http://japanese.ruvr.ru/
-  ruvr:
-    :feed: 'http://japanese.ruvr.ru/rss/export_all.xml'
-    :fetch:
-      :xpath: '//div[@class="limit-weight"][1]'
-      :replace: *short_html
-  
   # GIGAZINE
   gigazine:
     :feed: 'http://gigazine.net/news/rss_2.0/'
