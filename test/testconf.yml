@@ -5,7 +5,7 @@
 
 # 実行するpipe名
 :exe_pipes:
-- :nhk_kaisetsu
+- :tools4hack
 
 # timeout [s]
 :timeout: 3000

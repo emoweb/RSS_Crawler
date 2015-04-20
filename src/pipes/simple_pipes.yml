@@ -91,6 +91,7 @@ dmy:
   # 窓の杜 : http://www.forest.impress.co.jp/
   forest_impress:
     :feed: 'http://www.forest.impress.co.jp/rss.xml'
+    :filter: 'アクセスランキング|ダイジェストニュース|かうんとだうん|アップデート'
     :fetch:
       :xpath: '//div[@class="main-contents mainContents"]'
       :replace: [ *cut_crlf, *cut_tagspace ]
@@ -107,6 +108,16 @@ dmy:
         - *cut_divclass
       :abslink: true
   
+  # Tools 4 Hack
+  tools4hack:
+    :feed: 'http://tools4hack.santalab.me/feed'
+    :fetch:
+      :xpath: '//div[@id="the-content"]'
+      :replace:
+        - *cut_crlf
+        - ['<!-- 広告 -->.*?<h2>', '<h2>']
+        - *cut_divclass
+        - *cut_tagspace
   
   # 廃止検討
   excite_odd:

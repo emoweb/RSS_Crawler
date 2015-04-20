@@ -28,6 +28,8 @@
 - :gigazine
 # :nhk_kaisetsu : NHK 解説委員室ブログ
 - :nhk_kaisetsu
+# tools4hack : Tools 4 Hack
+- :tools4hack
 # 
 # 独立系
 # src/pipes/<:抜きフィード名>.rb に詳しく記載.
