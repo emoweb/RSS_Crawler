@@ -5,7 +5,7 @@
 
 # 実行するpipe名
 :exe_pipes:
-- :tools4hack
+- :rikunabi_tech
 
 # timeout [s]
 :timeout: 3000

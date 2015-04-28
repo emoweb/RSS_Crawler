@@ -8,6 +8,7 @@ dmy:
     - &cut_crlf '[\r\n]'
     - &cut_tagspace ['\s*([<>])\s*', '\1']
     - &cut_divclass ['<div\s((class|style|id)=\"[^\"]*\"\s*)*>', '<div>']
+    - &cut_tagclass ['<(div|p|span)\s((class|style|name|id)=\"[^\"]*\"\s*)*>', '<\1>']
 
 # pipe_procedureの引数そのまま.
 # filter等はRegexpに変換される.
@@ -19,7 +20,7 @@ dmy:
     :fetch:
       :xpath: '//div[@class="article"]'
       :replace: *short_html
-      :abslink: true  
+      :abslink: true
   
   # GIGAZINE
   gigazine:

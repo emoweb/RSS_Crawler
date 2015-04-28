@@ -37,6 +37,8 @@
 - :nikkan
 # :techon : 日経テクノロジーオンライン
 - :techon
+# :rikunabi_tech : Tech総研
+- :rikunabi_tech
 # 
 # NHKニュース
 # src/pipes/nhk_news.rb で定義
