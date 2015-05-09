@@ -16,6 +16,7 @@
 - :cyclist
 - :forest_impress
 - :itpro
+- :itsoku
 - :gigazine
 - :tools4hack
 - :nhk_kaisetsu
@@ -25,7 +26,6 @@
 - :rikunabi_tech
 # nhk news
 - :nhknews0
-- :nhknews3
 
 # timeout [s]
 :timeout: 3000

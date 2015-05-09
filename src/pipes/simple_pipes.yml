@@ -81,6 +81,16 @@ dmy:
         - *cut_tagspace
       :abslink: true
   
+  # IT速報
+  itsoku:
+    :feed: 'http://blog.livedoor.jp/itsoku/index.rdf'
+    :fetch:
+      :xpath: '//div[@class="article-body"]'
+      :replace:
+        - *cut_crlf
+        - '<div class="adtitle">スポンサードリンク</div>.*<!-- adsmid -->'
+        
+    
 
   # Cyclist
   cyclist:
