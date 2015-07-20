@@ -49,6 +49,7 @@ class RSSPipe
   attr_accessor :debug
   
   def info &bk; @l.info(@name, &bk); end
+  def error_log &bk; @l.error(@name, &bk); end
   
   # フィードを取得し, @dl_items に結合. set_channel = T なら channelも移す.
   # urlにはRSS::Parser.parseに渡せる形式ならなんでも渡せる.
@@ -85,7 +86,12 @@ class RSSPipe
     # ファイル読み込み
     prev = if @savefile.file?
       info{ 'cache loading'}
-      RSS::Parser.parse(@savefile).items
+      begin
+        RSS::Parser.parse(@savefile).items
+      rescue => e
+        error_log{ "faild to cache loading : #{e}" }
+        []
+      end
     else
       info{ 'The preview of results is empty'}
       []
@@ -286,10 +292,14 @@ class RSSPipe
     if r && opt[:abslink]
       base = URI.parse(res.access_url)
       #debug{ base.to_s }
-      r.gsub!(/\s(href|src)=\"([^\"]+)\"/) {
-        #@l.debug{ "#{$2} -> #{base.merge($2)}" }
-        %Q! #{$1}="#{base.merge($2)}"!
-      }
+      begin
+        r.gsub!(/\s(href|src)=\"([^\"]+)\"/) {
+          #@l.debug{ "#{$2} -> #{base.merge($2)}" }
+          %Q! #{$1}="#{base.merge($2)}"!
+        }
+      rescue => e
+        error_log{ "abs link failed : #{e}" }
+      end
     end
     
     # return
