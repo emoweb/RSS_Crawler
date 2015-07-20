@@ -29,6 +29,9 @@ class RSSCrawler
     
     # debugオプション. crawl前にpipeに転送される.
     @debug = {}
+    
+    # crawl時に例外を吐いた場合,それを記録
+    @errors = []
   end
   attr_accessor :debug, :logger
   
@@ -45,6 +48,7 @@ class RSSCrawler
     
   rescue => e
     @logger.error_exception(name, e)
+    @errors << [name, e, $@]
   end
   
   # multi threadでcrawl
@@ -68,6 +72,26 @@ class RSSCrawler
     
     # wait for crawl
     @cwth.each{|th| th.join }
+    
+    # save errors
+    if !@errors.empty?() && (eln = @conf[:error_log_name])
+      @logger.info{ "save errors" }
+      r = RSS20.new
+      t = Time.now
+      d = @errors.collect{ |name, e, place|
+        "<strong>#{name}</strong><br/><p>" +
+          CGI.escapeHTML(e.inspect) +
+          "\nin\n" + CGI.escapeHTML(place.join("\n")) + "</p>"
+      }.join('<br/><br/>')
+      
+      r.channel = { :title => "RSS Crawler Error Log", :link => " ", :description => " " }
+      r.items << { :pubDate => t, :title => t.to_s(), :link => ' ', :description => d }
+      
+      savefile = @savedir + "#{eln}.xml"
+      IO.write(savefile, r.to_xml)
+    end
+    
+    
     @logger.info{ "complete" }
     
   rescue => e
