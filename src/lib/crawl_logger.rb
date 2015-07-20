@@ -49,7 +49,7 @@ class CrawlLogger
     
     mes, nextline = if (logdata = log_mes_gen.call).is_a?(Enumerable) then
       a = logdata.to_a
-      n = a[1..-1].collect {|s| "-,-,-,#{s},-" }.join("\n")
+      n = a[1..-1].collect {|s| "-,-,-,#{s.chomp},-" }.join("\n")
       [a[0], "\n" + n]
     else
       [logdata, ""]
@@ -75,8 +75,8 @@ class CrawlLogger
     log("DEBUG", progname, &log_mes_gen) if 2 < @loglevel
   end
   
-  def error_exception place, exception, progname = @def_progname
-    error(progname){ "#{place} : #{exception.inspect} in #{$@.inspect}" }
+  def error_exception place, exception
+    error(place){ [*(exception.inspect.lines.to_a), "@", *$@] }
   end
   
 end
