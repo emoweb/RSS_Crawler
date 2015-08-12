@@ -54,20 +54,32 @@ module NHKNews
   
   # fetch options
   FETCH_OPT = {
-    :xpath => '//div[@class="entry"]',
+    :xpath => 'id("news")//div[@class="section"]//div[@class="entry" or @class="news_add"]',
     :replace => [
       /<div id=\"news_video\">[^<]+<\/div>/, # Flashでの動画再生用リンク
       /^\s+/, /[\r\n]/, # 空白・改行
-      [/<(div|p)\s((class|id)=\"[^\"]*\"\s*)*>/, '<\1>'], # class情報
-      /^.*?-->/, # HTML先頭とコメント
+      [/<(div|p|ul|li|span)\s((class|id|style)=\"[^\"]*\"\s*)*>/, '<\1>'], # class情報
+##      /^.*?-->/,
+      /<!--.*?-->/, # HTML先頭とコメント
+#      [%r!<h\d[^>]*>(.*?)</h\d>!, '\1'], # h→b
+#      [%r!<div>関連ニュース<ul></ul></div><div><span>[\w\.]+</span>!, '<br /><div>'],
+#      %r!<div><div><ul>.*?</ul></div></div>$!, # 最後のリンクとか
+#      [%r!<(/)?span>!, '<\1b>'], # span→b
+#      '<div>関連ニュース[自動検索]<ul></ul></div>', # 関連Newsなし
+#      '<div>関連リンク<ul></ul></div>', # 関連リンクなし
+#      %r!^<div><div><a [^>]*>.*?ニュース</a></div></div>!,
     ],
     :abslink => true,
   }
   
   # fetchの実行
   def fetch pipe, item
-    r = pipe.get_description(item,FETCH_OPT)
-    return r && (r + twitter_search_link(item.link))
+    return nil unless r = pipe.get_description(item,FETCH_OPT)
+    # 無駄なdivを削除. 削除後に発生した分も消せるようにする
+#    rtmp = r
+#    r = rtmp while (rtmp = r.gsub('<div></div>', '')) != r
+    # twitterリンクを付けて返す
+    return r + twitter_search_link(item.link)
   end
   module_function :fetch
   
