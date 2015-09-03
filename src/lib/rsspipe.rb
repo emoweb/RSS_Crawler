@@ -6,6 +6,7 @@ libpath = Pathname(__FILE__).dirname
 require libpath + 'httputil'
 require libpath + 'crawl_logger'
 require libpath + 'rss20'
+require libpath + 'xmlutil'
 
 require 'rss'
 require 'set'
@@ -189,6 +190,7 @@ class RSSPipe
   
   #   fetch(nil | Proc | {
   #     :xpath => String
+  #     :remxpath => [String]
   #     :replace => [Regexp | [Regexp, String]]
   #     :edit => Proc
   #     :abslink => True | False
@@ -204,6 +206,7 @@ class RSSPipe
   # 
   # Hashを渡した場合,オプションに従いHTMLを加工する.
   # :xpath    : 指定したXPathでHTMLから抜き出しを行う.
+  # :remxpath : xpathでマッチした要素を削除する.
   # :relpace  : 各要素を評価しgsubしていく.Stringを省略時は''として扱う.
   # :edit     : ProcにHTMLを渡し,戻り値をHTMLとする.
   # :abslink  : 相対リンクを絶対リンクに変換するか.
@@ -259,7 +262,8 @@ class RSSPipe
     # title更新flag
     get_title = (!stritem) && opt[:get_title]
     # Nokogiriパース
-    xp = Nokogiri::HTML(r) if get_title || opt[:xpath]
+    xp = (get_title || opt[:xpath] || opt[:remxpath]) && Nokogiri::HTML(r)
+    
     # title更新
     if get_title
       # procの場合はtitleをprocで加工して適用
@@ -276,8 +280,18 @@ class RSSPipe
     end
     
     # XPath適用. nil(=マッチなし)なら戻る.
-    r = xp.xpath(opt[:xpath]).to_s if opt[:xpath]
-    return nil if r.empty?
+    if xp
+      xp = xp.xpath(opt[:xpath]) if opt[:xpath]
+      
+      # remove xpath
+      rxpa = opt[:remxpath] || []
+      rxpa.each{ |rxp|
+        xp.remove_xpath(rxp)
+      }
+      
+      r = xp.to_s
+      return nil if r.empty?
+    end
     
     # Regex relplace
     reparr = opt[:replace] || [] # nilなら空配列を処理
