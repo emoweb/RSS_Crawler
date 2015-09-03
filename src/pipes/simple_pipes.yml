@@ -130,6 +130,19 @@ dmy:
         - *cut_divclass
         - *cut_tagspace
   
+  engadget:
+    :feed: 'http://japanese.engadget.com/rss.xml'
+    :fetch:
+        :xpath: '//div[@class="copy post-body"]'
+        :remxpath:
+            - '//div[@class="aol-share"]'
+            - '//aside[@class="meta-social"]'
+            - '//style'
+        :replace:
+            - *cut_crlf
+            - *cut_divclass
+            - *cut_tagspace
+
   # 廃止検討
   excite_odd:
     :feed: 'http://www.excite.co.jp/News/rss/odd/'

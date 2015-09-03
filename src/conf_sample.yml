@@ -35,6 +35,8 @@
 - :nhk_kaisetsu
 # tools4hack : Tools 4 Hack
 - :tools4hack
+# engadget(jp)
+- :engadget
 # 
 # 独立系
 # src/pipes/<:抜きフィード名>.rb に詳しく記載.
