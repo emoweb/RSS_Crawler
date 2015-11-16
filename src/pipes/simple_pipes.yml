@@ -107,18 +107,7 @@ dmy:
       :xpath: '//div[@class="main-contents mainContents"]'
       :replace: [ *cut_crlf, *cut_tagspace ]
       :abslink: true
-  
-  # ITPro
-  itpro:
-    :feed: 'http://itpro.nikkeibp.co.jp/rss/ITpro.rdf'
-    :filter: '^［PR］'
-    :fetch:
-      :xpath: '//div[@id="kiji"]'
-      :replace:
-        - ['("[^"]+)&amp;([^"]+")', '\1&\2']
-        - *cut_divclass
-      :abslink: true
-  
+
   # Tools 4 Hack
   tools4hack:
     :feed: 'http://tools4hack.santalab.me/feed'

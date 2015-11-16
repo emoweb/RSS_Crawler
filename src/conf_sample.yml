@@ -27,8 +27,6 @@
 - :cyclist
 # :forest_impress : 窓の杜
 - :forest_impress
-# :itpro : ITPro
-- :itpro
 # :gigazine : GIGAZINE
 - :gigazine
 # :nhk_kaisetsu : NHK 解説委員室ブログ
@@ -44,6 +42,8 @@
 - :techon
 # :rikunabi_tech : Tech総研
 - :rikunabi_tech
+# :itpro : ITPro
+- :itpro
 # 
 # NHKニュース
 # src/pipes/nhk_news.rb で定義
