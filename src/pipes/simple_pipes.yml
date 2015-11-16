@@ -110,7 +110,7 @@ dmy:
   
   # ITPro
   itpro:
-    :feed: 'http://itpro.nikkeibp.co.jp/rss/news.rdf'
+    :feed: 'http://itpro.nikkeibp.co.jp/rss/ITpro.rdf'
     :filter: '^［PR］'
     :fetch:
       :xpath: '//div[@id="kiji"]'

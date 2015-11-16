@@ -40,8 +40,6 @@
 # 
 # 独立系
 # src/pipes/<:抜きフィード名>.rb に詳しく記載.
-# :nikkan : 日刊工業新聞 Business Line 新着ニュース
-- :nikkan
 # :techon : 日経テクノロジーオンライン
 - :techon
 # :rikunabi_tech : Tech総研
