@@ -25,8 +25,9 @@ class TechonFetcher
     [
       /[\r\n]/, [/\s*([<>])\s*/, '\1'],
       [/(<\w+)\sclass=\"[^\"]+">/, '\1>'],
-    ].each{ |reg,rep|
-      html.gsub!(Regexp.new(reg), rep || '')
+      [/%E2%80%9[CD]/, ''] # 全角の”が交じるとかいう糞みたいなミスをする記事があったためその対応
+    ].each{ |pat,rep|
+      html.gsub!(pat, rep || '')
     }
     # リンク変換
     base = URI.parse(link)
