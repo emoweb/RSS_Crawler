@@ -144,6 +144,18 @@ dmy:
             - '//script'
             - '//dl'
   
+  # 北欧女子オーサ オフィシャルブログ(ameblo)
+  hokuoujoshi:
+    :feed: 'http://feedblog.ameba.jp/rss/ameblo/hokuoujoshi/rss20.xml'
+    :fetch:
+      :xpath: '//div[@class="skinArticleBody2"]'
+      :replace:
+          - *cut_crlf
+          - *cut_divclass
+          - *cut_tagspace
+  
+  
+  
   # 廃止検討
   excite_odd:
     :feed: 'http://www.excite.co.jp/News/rss/odd/'
