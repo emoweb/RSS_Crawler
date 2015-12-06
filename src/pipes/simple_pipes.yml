@@ -149,12 +149,15 @@ dmy:
     :feed: 'http://feedblog.ameba.jp/rss/ameblo/hokuoujoshi/rss20.xml'
     :fetch:
       :xpath: '//div[@class="skinArticleBody2"]'
-      :replace:
-          - *cut_crlf
-          - *cut_divclass
-          - *cut_tagspace
+      :replace: *short_html
   
-  
+  # カスペルスキー公式ブログ
+#  kaspersky:
+#    :feed: 'https://blog.kaspersky.co.jp/feed/'
+#    :fetch:
+#      :xpath: '//div[@xpath="articleBody"]'
+#      :replace: *short_html
+  # httpsのDLエラーで諦める
   
   # 廃止検討
   excite_odd:

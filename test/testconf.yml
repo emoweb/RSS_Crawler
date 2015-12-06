@@ -1,11 +1,11 @@
 ---
 
-:save_directory: 'z:/'
-:log_directory: 'z:/'
+:save_directory: 'y:/'
+:log_directory: 'y:/'
 
 # 実行するpipe名
 :exe_pipes:
-- :hokuoujoshi
+- :kaspersky
 
 # timeout [s]
 :timeout: 3000
