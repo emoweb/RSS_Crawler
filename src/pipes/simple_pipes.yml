@@ -159,6 +159,15 @@ dmy:
 #      :replace: *short_html
   # httpsのDLエラーで諦める
   
+  # サイクルロード
+  cycleroad:
+    :feed: 'http://blog.cycleroad.com/index.rdf'
+    :fetch:
+      :xpath: '//div[@class="main"]'
+      :replace: *short_html
+  
+  
+  
   # 廃止検討
   excite_odd:
     :feed: 'http://www.excite.co.jp/News/rss/odd/'
