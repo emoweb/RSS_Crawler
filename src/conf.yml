@@ -1,9 +1,9 @@
 ---
 
 #:save_directory: 'z:/'
-:save_directory: 'D:/download/Dropbox/Public/feeds/'
+:save_directory: '/data/var/rssc/feeds/'
 
-:log_directory: 'd:/var/rssc/'
+:log_directory: '/data/var/rssc/log/'
 
 # システムエラーの保存名. 未定義で保存しない.
 :error_log_name: 'rsscrawler_errors'

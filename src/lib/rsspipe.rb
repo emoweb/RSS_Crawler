@@ -1,4 +1,4 @@
-#!ruby -Ku
+#!/bin/ruby -Ku
 # 必要な関数まとめ
 
 require 'pathname'

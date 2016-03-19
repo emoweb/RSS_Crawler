@@ -1,4 +1,4 @@
-#!ruby -Ku
+#!/bin/ruby -Ku
 # RSSを登録するときのindex of を作る.
 #require 'eruby'
 

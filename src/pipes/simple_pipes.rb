@@ -1,4 +1,4 @@
-#!ruby -Ku
+#!/bin/ruby -Ku
 # 単純なpipeはここで一括定義する.
 
 require 'yaml'

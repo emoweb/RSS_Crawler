@@ -1,4 +1,4 @@
-#!ruby -Ku
+#!/bin/ruby -Ku
 
 # 日経テクノロジーオンライン
 # http://techon.nikkeibp.co.jp/

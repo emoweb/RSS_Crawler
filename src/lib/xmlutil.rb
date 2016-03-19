@@ -1,4 +1,4 @@
-#!ruby -Ku
+#!/bin/ruby -Ku
 
 require 'nokogiri'
 

@@ -1,4 +1,4 @@
-#!ruby -Ku
+#!/bin/ruby -Ku
 
 # testconfで回すだけ
 

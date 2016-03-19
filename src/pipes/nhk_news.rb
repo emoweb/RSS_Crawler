@@ -1,4 +1,4 @@
-#!ruby -Ku
+#!/bin/ruby -Ku
 
 # NHKニュース
 # http://www3.nhk.or.jp/news/

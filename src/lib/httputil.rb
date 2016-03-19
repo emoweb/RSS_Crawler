@@ -1,4 +1,4 @@
-#!ruby -Ku
+#!/bin/ruby -Ku
 # HTTP関連の処理のまとめ
 
 require 'net/http'

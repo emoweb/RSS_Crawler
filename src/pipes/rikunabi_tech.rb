@@ -1,4 +1,4 @@
-#!ruby -Ku
+#!/bin/ruby -Ku
 
 # Tech総研
 # http://next.rikunabi.com/tech/index.rdf
