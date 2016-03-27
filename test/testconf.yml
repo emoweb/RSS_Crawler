@@ -1,11 +1,11 @@
 ---
 
-:save_directory: 'y:/'
-:log_directory: 'y:/'
+:save_directory: &dir '/data/tmp/'
+:log_directory: *dir
 
 # 実行するpipe名
 :exe_pipes:
-- :cycleroad
+- :nhknews0
 
 # timeout [s]
 :timeout: 3000

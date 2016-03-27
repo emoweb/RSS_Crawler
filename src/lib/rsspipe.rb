@@ -258,7 +258,7 @@ class RSSPipe
     res = page_access(url)
     return nil unless res
     r = res.text
-    
+    # IO.write("test.html", res.text)
     # title更新flag
     get_title = (!stritem) && opt[:get_title]
     # Nokogiriパース
