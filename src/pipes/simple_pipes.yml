@@ -21,7 +21,7 @@ dmy:
       :xpath: '//div[@class="article"]'
       :replace: *short_html
       :abslink: true
-  
+
   # GIGAZINE
   gigazine:
     :feed: 'http://gigazine.net/news/rss_2.0/'
@@ -32,7 +32,7 @@ dmy:
         *cut_crlf, *cut_tagspace, *cut_divclass,
         ['<br><br><b>・関連記事.*</p>', '</p>']
       ]
-  
+
   # Gizmodo : http://www.gizmodo.jp/
   gizmodo:
     :feed: 'http://www.gizmodo.jp/index.xml'
@@ -40,12 +40,12 @@ dmy:
       :xpath: '//div[@class="cXenseParse"]'
       :replace: [ *cut_crlf ]
       :update_url: 'rm_query'
-  
+
   # TechCrunch Japan » TechCrunch : http://jp.techcrunch.com/
   techcrunch:
     :feed: 'http://jp.techcrunch.com/feed/'
     :filter: '^P[Rr]:\s'
-  
+
   # 痛いニュース(ﾉ∀`) : http://blog.livedoor.jp/dqnplus/
   dqnplus:
     :feed: 'http://blog.livedoor.jp/dqnplus/index.rdf'
@@ -56,7 +56,7 @@ dmy:
         -
           - '^.*<\!-- google_ad_section_start -->(.*?)<div class="posted"></div>.*$'
           - '\1'
-  
+
   # フリーソフトの樹 : http://freesoftnoki.blog87.fc2.com/
   freesoftnoki:
     :feed: 'http://feedproxy.google.com/frnoki'
@@ -67,20 +67,7 @@ dmy:
         - *cut_tagspace
         - ['<div align=\"left\">.*(</td>)', '\1']
       :abslink: true
-  
-  # Wired
-  wired:
-    :feed: 'http://wired.jp/feed/'
-    :filter: '^PR:\s'
-    :fetch:
-      :xpath: '//div[@class="article_maincontents"]'
-      :replace:
-        - *cut_crlf
-        - ['<!-- impAct AD -->.*</div>', '</div>']
-        - ['(<\w+)\sclass=\"[^\"]+">', '\1>']
-        - *cut_tagspace
-      :abslink: true
-  
+
   # IT速報
   itsoku:
     :feed: 'http://blog.livedoor.jp/itsoku/index.rdf'
@@ -89,8 +76,8 @@ dmy:
       :replace:
         - *cut_crlf
         - '<div class="adtitle">スポンサードリンク</div>.*<!-- adsmid -->'
-        
-    
+
+
 
   # Cyclist
   cyclist:
@@ -98,7 +85,7 @@ dmy:
     :fetch:
       :xpath: '//div[@class="description clearfix"]'
       :abslink: true
-      
+
   # 窓の杜 : http://www.forest.impress.co.jp/
   forest_impress:
     :feed: 'http://www.forest.impress.co.jp/rss.xml'
@@ -118,7 +105,7 @@ dmy:
         - ['<!-- 広告 -->.*?<h2>', '<h2>']
         - *cut_divclass
         - *cut_tagspace
-  
+
   # engadget
   engadget:
     :feed: 'http://japanese.engadget.com/rss.xml'
@@ -132,7 +119,7 @@ dmy:
             - *cut_crlf
             - *cut_divclass
             - *cut_tagspace
-            
+
   # かりこまり速報
   kbtitblog:
     :feed: 'http://kbtit.blog.fc2.com/?xml'
@@ -143,14 +130,14 @@ dmy:
             - '//iframe[@class="hatena-bookmark-button-frame"]'
             - '//script'
             - '//dl'
-  
+
   # 北欧女子オーサ オフィシャルブログ(ameblo)
   hokuoujoshi:
     :feed: 'http://feedblog.ameba.jp/rss/ameblo/hokuoujoshi/rss20.xml'
     :fetch:
       :xpath: '//div[@class="skinArticleBody2"]'
       :replace: *short_html
-  
+
   # カスペルスキー公式ブログ
 #  kaspersky:
 #    :feed: 'https://blog.kaspersky.co.jp/feed/'
@@ -158,16 +145,16 @@ dmy:
 #      :xpath: '//div[@xpath="articleBody"]'
 #      :replace: *short_html
   # httpsのDLエラーで諦める
-  
+
   # サイクルロード
   cycleroad:
     :feed: 'http://blog.cycleroad.com/index.rdf'
     :fetch:
       :xpath: '//div[@class="main"]'
       :replace: *short_html
-  
-  
-  
+
+
+
   # 廃止検討
   excite_odd:
     :feed: 'http://www.excite.co.jp/News/rss/odd/'
@@ -175,11 +162,10 @@ dmy:
     :fetch:
       :xpath: '//div[@class="story"]'
       :abslink: true
-  
+
   excite_koneta:
     :feed: 'http://www.excite.co.jp/News/rss/source/?source=Excite'
     :filter: '^PR:\s'
     :fetch:
       :xpath: '//div[@class="story"]'
       :abslink: true
-      
