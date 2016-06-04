@@ -5,6 +5,7 @@
 # 複雑化したため,独自pipeに
 
 require 'uri'
+require 'kconv'
 
 class WiredFetcher
   def initialize pipe
@@ -15,14 +16,19 @@ class WiredFetcher
       :remxpath => [
         '//script',
         '//ul[@class="social-button-syncer"]',
+        '//section[@class="article-module-related"]',
+        '//ul[@class="GL-thumbList"]',
+        '//section[@class="article-tag-list"]',
       ],
       :replace => [
         /\r\n/,
+        /<!--\s[^>]*\s-->/, # コメント削除
         [/<div\s((class|style|id)=\"[^\"]*\"\s*)*>/, '<div>'],
         [/\s*([<>])\s*/, '\1'],
-        [/<(div|p|span)\s((class|style|name|id)=\"[^\"]*\"\s*)*>/, '<\1>'],
+        # クラス情報削除
+        [/<(div|p|span|ul|li|article|h1)\s((class|style|name|id|data-\w+)=\"[^\"]*\"\s*)*>/, '<\1>'],
         # imgタグをnoscriptのものに置換する
-        [%r!<p><img[^>]*></p><noscript>(<img[^>]*>)</noscript>!, '\1'],
+        [%r!(<p>)?<img[^>]*>(</p>)?<noscript>(<img[^>]*>)</noscript>!, '\3'],
       ],
       :abslink => true,
     }
@@ -42,10 +48,10 @@ class WiredFetcher
     case link.path
     when %r!^/\d{4}/\d{2}/\d{2}/!
       # 通常の場合
-      return @pipe.get_description(item, @normal_opt)
+      return @pipe.get_description(item, @normal_opt).to_s.toutf8
     else
       # 特集記事の場合
-      return @pipe.get_description(item, @article_opt)
+      return @pipe.get_description(item, @article_opt).to_s.toutf8
     end
   end
   
