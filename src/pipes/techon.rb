@@ -19,7 +19,7 @@ class TechonFetcher
       item.title = "[premium] " + item.title
     end
     # 記事切り出し
-    kj = h.xpath('//div[@class="kiji" or @class="article-body"]')
+    kj = h.xpath('//div[@class="kiji" or @id="kiji" or @class="article-body"]')
     pg = h.xpath('//div[@class="paging"]')
     link = r.access_url
     return wash_page(kj.to_s, link) +
