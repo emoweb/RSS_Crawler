@@ -27,10 +27,11 @@ dmy:
     :feed: 'http://gigazine.net/news/rss_2.0/'
     :filter: '^PR:\s'
     :fetch:
-      :xpath: '//p[@class="preface"]'
+      :xpath: '//div[@class="cntimage"]'
       :replace: [
         *cut_crlf, *cut_tagspace, *cut_divclass,
-        ['<br><br><b>・関連記事.*</p>', '</p>']
+        ['<img data-src="', '<img src="']
+        # ['<br><br><b>・関連記事.*</p>', '</p>']
       ]
 
   # Gizmodo : http://www.gizmodo.jp/
