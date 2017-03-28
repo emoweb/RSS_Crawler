@@ -36,7 +36,8 @@ dmy:
 
   # Gizmodo : http://www.gizmodo.jp/
   gizmodo:
-    :feed: 'http://www.gizmodo.jp/index.xml'
+    # :feed: 'http://www.gizmodo.jp/index.xml'
+    :feed: ['http://www.gizmodo.jp/atom.xml', false]
     :fetch:
       :xpath: '//div[@class="cXenseParse"]'
       :replace: [ *cut_crlf ]

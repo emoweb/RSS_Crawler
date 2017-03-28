@@ -11,7 +11,7 @@
 # 実行するpipe名
 :exe_pipes:
 # simple系
-- :gizmodo
+#- :gizmodo
 - :dqnplus
 - :freesoftnoki
 - :wired
@@ -21,10 +21,10 @@
 - :itpro
 - :itsoku
 - :gigazine
-- :tools4hack
+# - :tools4hack
 - :nhk_kaisetsu
 - :engadget
-- :kbtitblog
+#- :kbtitblog
 - :hokuoujoshi
 - :cycleroad
 # 独立系
