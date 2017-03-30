@@ -1,9 +1,8 @@
 ---
 
 #:save_directory: 'z:/'
-:save_directory: '/data/var/rssc/feeds/'
-
-:log_directory: '/data/var/rssc/log/'
+:save_directory: '/data/var/emoweb.github.io/'
+:log_directory: '/data/var/rssc_log/'
 
 # システムエラーの保存名. 未定義で保存しない.
 :error_log_name: 'rsscrawler_errors'
@@ -19,7 +18,6 @@
 - :cyclist
 - :forest_impress
 - :itpro
-- :itsoku
 - :gigazine
 # - :tools4hack
 - :nhk_kaisetsu
