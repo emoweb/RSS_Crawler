@@ -6,7 +6,7 @@ if [ ! -z "$r" ]; then
   ${0%/*}/src/rss_crawler.rb
   
   # 出力をGitHub Pagesへcommit
-  pushd /data/var/rssc_log/
+  pushd /data/var/emoweb.github.io/
   git add . && git commit -m "update" && git push
 fi
 
