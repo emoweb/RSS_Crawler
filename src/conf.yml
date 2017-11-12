@@ -2,7 +2,7 @@
 
 #:save_directory: 'z:/'
 :save_directory: '/data/var/emoweb.github.io/'
-:log_directory: '/data/var/rssc_log/'
+:log_directory: '/data/var/log/rssc/'
 
 # システムエラーの保存名. 未定義で保存しない.
 :error_log_name: 'rsscrawler_errors'
@@ -14,15 +14,12 @@
 - :dqnplus
 - :freesoftnoki
 - :wired
-- :excite_koneta
 - :cyclist
 - :forest_impress
 - :itpro
 - :gigazine
-# - :tools4hack
 - :nhk_kaisetsu
 - :engadget
-#- :kbtitblog
 - :hokuoujoshi
 - :cycleroad
 # 独立系
@@ -30,6 +27,8 @@
 #- :rikunabi_tech
 # nhk news
 - :nhknews0
+- :nhk_gendai
+
 
 # timeout [s]
 :timeout: 3000

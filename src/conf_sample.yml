@@ -64,6 +64,7 @@
 - :nhknews5
 - :nhknews6
 - :nhknews7
+- :nhk_gendai
 
 # timeout [s]
 :timeout: 3000

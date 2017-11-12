@@ -1,4 +1,4 @@
-#!/bin/ruby -Ku
+#!/usr/bin/env ruby
 
 # testconfで回すだけ
 

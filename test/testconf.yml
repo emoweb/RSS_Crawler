@@ -5,7 +5,8 @@
 
 # 実行するpipe名
 :exe_pipes:
-- :nhknews0
+# - :nhknews0
+- :nhk_gendai
 
 # timeout [s]
 :timeout: 3000
