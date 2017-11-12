@@ -1,4 +1,4 @@
-#!/bin/ruby -Ku
+#!/usr/bin/env ruby
 
 require 'pathname'
 srcdir = Pathname(__FILE__).dirname
