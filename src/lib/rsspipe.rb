@@ -304,7 +304,7 @@ class RSSPipe
     
     # リンク変換
     if r && opt[:abslink]
-      base = URI.parse(res.access_url)
+      base = URI(res.access_url)
       #debug{ base.to_s }
       begin
         r.gsub!(/\s(href|src)=\"([^\"]+)\"/) {
