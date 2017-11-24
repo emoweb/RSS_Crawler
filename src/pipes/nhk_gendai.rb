@@ -20,15 +20,18 @@ RSS_PIPES[:nhk_gendai] = proc{ |pipe|
   cal_month = idxpage.xpath('string(//*[@class="calendar__title"])').gsub(/月|日/, '/')
 
   # 項目を取得しitemを生成
-  pipe.dl_items = idxpage.xpath('//div[@class="calendarItem"]').collect{ |nd|
+  pipe.dl_items = []
+  idxpage.xpath('//div[@class="calendarItem"]').each{ |nd|
+    # ダイジェストが存在するか確認
+    next if nd.xpath('.//span[@class="label--digest"]').empty?
+    # アイテム生成と追加
     r = RSS::Rss::Channel::Item.new()
-    # link取得
+    pipe.dl_items << r
+    # link取得, 設定
     r.link = (URI(NHK_GENDAI_ROOT_PAGE) + nd.xpath('string(./a/@href)')).to_s
     # 時間取得し設定. 放送時間に合わせ公開日の22:00にする.
     cal_day = nd.xpath('string(.//*[@class="dateText"])')
     r.date = Time.parse(cal_month + cal_day + " 22:00")
-    # return
-    r
   }
 
   # channelを設定
