@@ -2,11 +2,10 @@
 # 必要な関数まとめ
 
 require 'pathname'
-libpath = Pathname(__FILE__).dirname
-require libpath + 'httputil'
-require libpath + 'crawl_logger'
-require libpath + 'rss20'
-require libpath + 'xmlutil'
+require_relative 'httputil'
+require_relative 'crawl_logger'
+require_relative 'rss20'
+require_relative 'xmlutil'
 
 require 'rss'
 require 'set'
