@@ -55,13 +55,18 @@ module HTTPUtil
   #       request(url, method, *arg) -> Net::HTTPResponse
   # 
   # HTTPのrequest_XXをURIパースして呼び出すためのwrapper
-  def request url, method, *arg
-    u = URI url
+  def request(url, method, *args)
+    u = URI(url)
+
+    # path生成
     pt = u.path
     pt = "/" if pt.empty?
     pt += ('?' + u.query) if u.query
     pt += ('#' + u.fragment) if u.fragment
-    Net::HTTP.new(u.host, u.port).__send__(method, pt, *arg)
+    
+    c = Net::HTTP.new(u.host, u.port)
+    c.use_ssl = (u.scheme == 'https')
+    c.__send__(method, pt, *args)
   end
   module_function :request
   

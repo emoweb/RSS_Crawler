@@ -70,20 +70,18 @@ dmy:
         - ['<div align=\"left\">.*(</td>)', '\1']
       :abslink: true
 
-  # IT速報
-  itsoku:
-    :feed: 'http://blog.livedoor.jp/itsoku/index.rdf'
-    :fetch:
-      :xpath: '//div[@class="article-body"]'
-      :replace:
-        - *cut_crlf
-        - '<div class="adtitle">スポンサードリンク</div>.*<!-- adsmid -->'
-
-
+  # # IT速報
+  # itsoku:
+  #   :feed: 'http://blog.livedoor.jp/itsoku/index.rdf'
+  #   :fetch:
+  #     :xpath: '//div[@class="article-body"]'
+  #     :replace:
+  #       - *cut_crlf
+  #       - '<div class="adtitle">スポンサードリンク</div>.*<!-- adsmid -->'
 
   # Cyclist
   cyclist:
-    :feed: 'http://cyclist.sanspo.com/feed'
+    :feed: 'https://cyclist.sanspo.com/feed'
     :fetch:
       :xpath: '//div[@class="description clearfix"]'
       :abslink: true
@@ -110,7 +108,7 @@ dmy:
 
   # engadget
   engadget:
-    :feed: 'http://japanese.engadget.com/rss.xml'
+    :feed: 'https://japanese.engadget.com/rss.xml'
     :fetch:
         :xpath: '//div[@class="copy post-body"]'
         :remxpath:
@@ -122,23 +120,12 @@ dmy:
             - *cut_divclass
             - *cut_tagspace
 
-  # かりこまり速報
-  kbtitblog:
-    :feed: 'http://kbtit.blog.fc2.com/?xml'
-    :fetch:
-        :xpath: '//div[@class="category"][2]/div[@class="entry_body"][1]'
-        :remxpath:
-            - '//div[@class="fc2_footer"]'
-            - '//iframe[@class="hatena-bookmark-button-frame"]'
-            - '//script'
-            - '//dl'
-
-  # 北欧女子オーサ オフィシャルブログ(ameblo)
-  hokuoujoshi:
-    :feed: 'http://feedblog.ameba.jp/rss/ameblo/hokuoujoshi/rss20.xml'
-    :fetch:
-      :xpath: '//div[@class="skinArticleBody2"]'
-      :replace: *short_html
+  # # 北欧女子オーサ オフィシャルブログ(ameblo)
+  # hokuoujoshi:
+  #   :feed: 'http://feedblog.ameba.jp/rss/ameblo/hokuoujoshi/rss20.xml'
+  #   :fetch:
+  #     :xpath: '//div[@class="skinArticleBody2"]'
+  #     :replace: *short_html
 
   # カスペルスキー公式ブログ
 #  kaspersky:
@@ -148,14 +135,12 @@ dmy:
 #      :replace: *short_html
   # httpsのDLエラーで諦める
 
-  # サイクルロード
-  cycleroad:
-    :feed: 'http://blog.cycleroad.com/index.rdf'
-    :fetch:
-      :xpath: '//div[@class="main"]'
-      :replace: *short_html
-
-
+  # # サイクルロード
+  # cycleroad:
+  #   :feed: 'http://blog.cycleroad.com/index.rdf'
+  #   :fetch:
+  #     :xpath: '//div[@class="main"]'
+  #     :replace: *short_html
 
   # 廃止検討
   excite_odd:

@@ -6,7 +6,10 @@
 # 実行するpipe名
 :exe_pipes:
 # - :nhknews0
-- :nhk_gendai
+# - :nhk_gendai
+# - :wired
+- :engadget
+- :cyclist
 
 # timeout [s]
 :timeout: 3000
