@@ -63,7 +63,7 @@ end
 RSS_PIPES[:wired] = Proc.new{ |pipe|
   f = WiredFetcher.new(pipe)
   opt = {
-    :feed => 'http://feed.rssad.jp/rss/wired/feed.rdf',
+    :feed => 'https://wired.jp/rssfeeder/',
     :filter => '^PR:\s',
     :fetch => Proc.new{|i| f.fetch_wired(i)},
   }
