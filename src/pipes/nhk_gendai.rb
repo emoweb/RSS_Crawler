@@ -9,7 +9,7 @@ require 'rss'
 require 'nokogiri'
 require 'uri'
 
-NHK_GENDAI_ROOT_PAGE = 'http://www.nhk.or.jp/gendai/archives/'
+NHK_GENDAI_ROOT_PAGE = 'https://www.nhk.or.jp/gendai/archives/'
 
 RSS_PIPES[:nhk_gendai] = proc{ |pipe|
   # :feed作成処理 -----------

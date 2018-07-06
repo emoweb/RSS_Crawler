@@ -8,7 +8,7 @@
 RSS_PIPES[:itpro] = Proc.new{ |pipe|
   # RDFを取得して編集
   pipe.info{'access RDF'}
-  rssbin = HTTPUtil::get('http://itpro.nikkeibp.co.jp/rss/ITpro.rdf').body
+  rssbin = HTTPUtil::get('https://itpro.nikkeibp.co.jp/rss/ITpro.rdf').body
   
   subptn = <<PTN
 <item rdf:about="">
