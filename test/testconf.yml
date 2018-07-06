@@ -8,8 +8,9 @@
 # - :nhknews0
 # - :nhk_gendai
 # - :wired
-- :engadget
-- :cyclist
+# - :engadget
+# - :cyclist
+- :techon
 
 # timeout [s]
 :timeout: 3000

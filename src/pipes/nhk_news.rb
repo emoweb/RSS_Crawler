@@ -93,7 +93,7 @@ end
   name = "nhknews#{catname}".to_sym
   RSS_PIPES[name] = Proc.new{ |pipe|
     opt = {
-      :feed => "http://www3.nhk.or.jp/rss/news/cat#{catname}.xml",
+      :feed => "https://www3.nhk.or.jp/rss/news/cat#{catname}.xml",
       :fetch => Proc.new{ |item|
         NHKNews.fetch(pipe,item)
       }

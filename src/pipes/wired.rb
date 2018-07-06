@@ -10,7 +10,7 @@ require 'kconv'
 class WiredFetcher
   def initialize pipe
     @pipe = pipe
-    @base_u = URI('http://wired.jp/')
+    @base_u = URI('https://wired.jp/')
     # get_descriptionのoption
     opt_base = {
       :remxpath => [

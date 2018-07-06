@@ -16,7 +16,7 @@ dmy:
 :pipe_procedure:
   # NHK解説アーカイブス
   nhk_kaisetsu:
-    :feed: 'http://www.nhk.or.jp/kaisetsu-blog/index.xml'
+    :feed: 'https://www.nhk.or.jp/kaisetsu-blog/index.xml'
     :fetch:
       :xpath: '//div[@class="article"]'
       :replace: *short_html
@@ -24,7 +24,7 @@ dmy:
 
   # GIGAZINE
   gigazine:
-    :feed: 'http://gigazine.net/news/rss_2.0/'
+    :feed: 'https://gigazine.net/news/rss_2.0/'
     :filter: '^PR:\s'
     :fetch:
       :xpath: '//div[@class="cntimage"]'
@@ -37,7 +37,7 @@ dmy:
   # Gizmodo : http://www.gizmodo.jp/
   gizmodo:
     # :feed: 'http://www.gizmodo.jp/index.xml'
-    :feed: ['http://www.gizmodo.jp/atom.xml', false]
+    :feed: ['https://www.gizmodo.jp/atom.xml', false]
     :fetch:
       :xpath: '//div[@class="cXenseParse"]'
       :replace: [ *cut_crlf ]
@@ -45,23 +45,23 @@ dmy:
 
   # TechCrunch Japan » TechCrunch : http://jp.techcrunch.com/
   techcrunch:
-    :feed: 'http://jp.techcrunch.com/feed/'
+    :feed: 'https://jp.techcrunch.com/feed/'
     :filter: '^P[Rr]:\s'
 
   # 痛いニュース(ﾉ∀`) : http://blog.livedoor.jp/dqnplus/
-  dqnplus:
-    :feed: 'http://blog.livedoor.jp/dqnplus/index.rdf'
-    :fetch:
-      :xpath: '//div[@class="blogbody"]'
-      :replace:
-        - *cut_crlf
-        -
-          - '^.*<\!-- google_ad_section_start -->(.*?)<div class="posted"></div>.*$'
-          - '\1'
+  # dqnplus:
+  #   :feed: 'https://blog.livedoor.jp/dqnplus/index.rdf'
+  #   :fetch:
+  #     :xpath: '//div[@class="blogbody"]'
+  #     :replace:
+  #       - *cut_crlf
+  #       -
+  #         - '^.*<\!-- google_ad_section_start -->(.*?)<div class="posted"></div>.*$'
+  #         - '\1'
 
   # フリーソフトの樹 : http://freesoftnoki.blog87.fc2.com/
   freesoftnoki:
-    :feed: 'http://feedproxy.google.com/frnoki'
+    :feed: 'https://feeds.feedburner.com/frnoki'
     :fetch:
       :xpath: '//td[@class="main_txt"]'
       :replace:
@@ -88,7 +88,7 @@ dmy:
 
   # 窓の杜 : http://www.forest.impress.co.jp/
   forest_impress:
-    :feed: 'http://www.forest.impress.co.jp/rss.xml'
+    :feed: 'https://forest.watch.impress.co.jp/data/rss/1.0/wf/feed.rdf'
     :filter: 'アクセスランキング|ダイジェストニュース|かうんとだうん|アップデート'
     :fetch:
       :xpath: '//div[@class="main-contents mainContents"]'
@@ -97,7 +97,7 @@ dmy:
 
   # Tools 4 Hack
   tools4hack:
-    :feed: 'http://tools4hack.santalab.me/feed'
+    :feed: 'https://tools4hack.santalab.me/feed'
     :fetch:
       :xpath: '//div[@id="the-content"]'
       :replace:
@@ -128,12 +128,11 @@ dmy:
   #     :replace: *short_html
 
   # カスペルスキー公式ブログ
-#  kaspersky:
-#    :feed: 'https://blog.kaspersky.co.jp/feed/'
-#    :fetch:
-#      :xpath: '//div[@xpath="articleBody"]'
-#      :replace: *short_html
-  # httpsのDLエラーで諦める
+ kaspersky:
+   :feed: 'https://blog.kaspersky.co.jp/feed/'
+   :fetch:
+     :xpath: '//div[@xpath="articleBody"]'
+     :replace: *short_html
 
   # # サイクルロード
   # cycleroad:

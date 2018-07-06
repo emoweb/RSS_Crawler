@@ -52,7 +52,7 @@ end
 RSS_PIPES[:techon] = Proc.new{ |pipe|
   f = TechonFetcher.new(pipe)
   opt = {
-    :feed => 'http://techon.nikkeibp.co.jp/rss/index.rdf',
+    :feed => 'https://techon.nikkeibp.co.jp/rss/index.rdf',
     :fetch => proc{|item| f.fetch_techon(item)},
   }
   pipe.pipe_procedure(opt)
