@@ -48,17 +48,6 @@ dmy:
     :feed: 'https://jp.techcrunch.com/feed/'
     :filter: '^P[Rr]:\s'
 
-  # 痛いニュース(ﾉ∀`) : http://blog.livedoor.jp/dqnplus/
-  # dqnplus:
-  #   :feed: 'https://blog.livedoor.jp/dqnplus/index.rdf'
-  #   :fetch:
-  #     :xpath: '//div[@class="blogbody"]'
-  #     :replace:
-  #       - *cut_crlf
-  #       -
-  #         - '^.*<\!-- google_ad_section_start -->(.*?)<div class="posted"></div>.*$'
-  #         - '\1'
-
   # フリーソフトの樹 : http://freesoftnoki.blog87.fc2.com/
   freesoftnoki:
     :feed: 'https://feeds.feedburner.com/frnoki'
@@ -119,27 +108,13 @@ dmy:
             - *cut_crlf
             - *cut_divclass
             - *cut_tagspace
-
-  # # 北欧女子オーサ オフィシャルブログ(ameblo)
-  # hokuoujoshi:
-  #   :feed: 'http://feedblog.ameba.jp/rss/ameblo/hokuoujoshi/rss20.xml'
-  #   :fetch:
-  #     :xpath: '//div[@class="skinArticleBody2"]'
-  #     :replace: *short_html
-
+  
   # カスペルスキー公式ブログ
- kaspersky:
+  kaspersky:
    :feed: 'https://blog.kaspersky.co.jp/feed/'
    :fetch:
      :xpath: '//div[@xpath="articleBody"]'
      :replace: *short_html
-
-  # # サイクルロード
-  # cycleroad:
-  #   :feed: 'http://blog.cycleroad.com/index.rdf'
-  #   :fetch:
-  #     :xpath: '//div[@class="main"]'
-  #     :replace: *short_html
 
   # 廃止検討
   excite_odd:
