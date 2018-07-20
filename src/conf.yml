@@ -10,8 +10,7 @@
 # 実行するpipe名
 :exe_pipes:
 # simple系
-#- :gizmodo
-- :dqnplus
+- :gizmodo
 - :freesoftnoki
 - :wired
 - :cyclist
@@ -21,9 +20,9 @@
 - :nhk_kaisetsu
 - :engadget
 - :cycleroad
+- :kaspersky
 # 独立系
 - :techon
-#- :rikunabi_tech
 # nhk news
 - :nhknews0
 - :nhk_gendai

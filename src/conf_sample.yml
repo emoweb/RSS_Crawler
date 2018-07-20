@@ -15,14 +15,10 @@
 # src/pipes/simple_pipes.yml に詳しく記載.
 # :gizmodo : Gizmodo
 - :gizmodo
-# :dqnplus : 痛いニュース(ﾉ∀`)
-- :dqnplus
 # :freesoftnoki : フリーソフトの樹
 - :freesoftnoki
 # :wired : Wired
 - :wired
-# :itsoku : IT速報
-- :itsoku
 # :cyclist : Cyclist
 - :cyclist
 # :forest_impress : 窓の杜
