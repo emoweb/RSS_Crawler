@@ -1,16 +1,11 @@
 ---
 
-:save_directory: &dir '/data/tmp/'
+:save_directory: &dir './'
 :log_directory: *dir
 
 # 実行するpipe名
-:exe_pipes:
-# - :nhknews0
-# - :nhk_gendai
-# - :wired
-# - :engadget
-# - :cyclist
-- :techon
+:exe_pipes: 
+  - :comic_meteor
 
 # timeout [s]
 :timeout: 3000
