@@ -84,6 +84,25 @@ dmy:
       :replace: [ *cut_crlf, *cut_tagspace ]
       :abslink: true
 
+  PC Watch : https://pc.watch.impress.co.jp/
+  pc_watch:
+    :feed: 'https://pc.watch.impress.co.jp/data/rss/1.0/pcw/feed.rdf'
+    :fetch:
+      &impress_watch
+      :xpath: '//div[@class="main-contents mainContents"]'
+      :replace:
+        - *cut_crlf
+        - *cut_tagspace
+        - ['<a href="([\w\./:]+)/html(/[\w\.]+).html".*?</a>', '<img src="\1\2">']
+        - *cut_divclass
+        - ['\.html%20"', '.html"']
+      :abslink: true
+  
+  # 家電Watch : https://kaden.watch.impress.co.jp/
+  kaden_watch:
+    :feed: 'https://kaden.watch.impress.co.jp/data/rss/1.0/kdw/feed.rdf'
+    :fetch: *impress_watch
+
   # Tools 4 Hack
   tools4hack:
     :feed: 'https://tools4hack.santalab.me/feed'
