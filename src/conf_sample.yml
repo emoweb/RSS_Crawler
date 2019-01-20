@@ -40,7 +40,9 @@
 - :rikunabi_tech
 # :itpro : ITPro
 - :itpro
-# 
+# :newswitch : ニュースイッチ
+- :newswitch
+#
 # NHKニュース
 # src/pipes/nhk_news.rb で定義
 # :nhknews-live : JUST IN
